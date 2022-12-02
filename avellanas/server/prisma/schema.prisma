@@ -53,10 +53,7 @@ model Mesa {
 enum EstadoMesa {
   Desocupada
   Ocupada
-  Reservada
   Inactiva
-  Por_Pagar
-  Pedido_Registrado
 }
 
 model Producto {

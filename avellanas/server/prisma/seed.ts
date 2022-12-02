@@ -156,7 +156,7 @@ async function main() {
     //Instancia de mesa 3
     data: {
       codigo: "AVA-3",
-      estado: EstadoMesa.Reservada,
+      estado: EstadoMesa.Desocupada,
       capacidad: 4,
       idRestaurante: 1,
     },
@@ -166,7 +166,7 @@ async function main() {
     //Instancia de mesa 4
     data: {
       codigo: "AVA-4",
-      estado: EstadoMesa.Por_Pagar,
+      estado: EstadoMesa.Desocupada,
       capacidad: 4,
       idRestaurante: 1,
     },

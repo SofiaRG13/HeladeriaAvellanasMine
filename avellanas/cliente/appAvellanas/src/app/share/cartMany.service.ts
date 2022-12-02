@@ -5,6 +5,7 @@ export class ItemCart {
   idItem: number;
   product: any;
   cantidad: number;
+  notas: any;
   precio: number;
   subtotal: number;
   descuento: number;
@@ -12,22 +13,22 @@ export class ItemCart {
 @Injectable({
   providedIn: 'root',
 })
-export class CartService {
+export class CartManyService {
   private cart = new BehaviorSubject<ItemCart[]>(null); //Definimos nuestro BehaviorSubject, este debe tener un valor inicial siempre
   public currentDataCart$ = this.cart.asObservable(); //Tenemos un observable con el valor actual del BehaviorSubject
   public qtyItems = new Subject<number>();
+  public idMesa: number;
   constructor() {
     //Obtener los datos de la variable orden guardada en el localStorage
     this.cart = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('detallepedido'))
+      JSON.parse(localStorage.getItem('pedidoMesa' + this.idMesa))
     );
-
 
     //Establecer un observable para los datos del carrito
     this.currentDataCart$ = this.cart.asObservable();
   }
   saveCart(): void {
-    localStorage.setItem('detallepedido', JSON.stringify(this.cart.getValue()));
+    localStorage.setItem('pedidoMesa' + this.idMesa, JSON.stringify(this.cart.getValue()));
   }
   addToCart(producto: any) {
     const newItem = new ItemCart();
@@ -37,6 +38,7 @@ export class CartService {
     newItem.precio = producto.precio;
     newItem.descuento = producto.descuento;
     newItem.cantidad = 1;
+    newItem.notas = producto.notas;
     newItem.subtotal = this.calculoSubtotal(newItem);
     newItem.product = producto;
     //Obtenemos el valor actual
@@ -61,6 +63,11 @@ export class CartService {
           //Actualizar la cantidad de un producto existente
           listCart[objIndex].cantidad += 1;
         }
+        if (producto.hasOwnProperty('notas')) {
+          //Actualizar cantidad
+          listCart[objIndex].notas = producto.notas;
+        }
+        newItem.notas = listCart[objIndex].notas;
         newItem.cantidad = listCart[objIndex].cantidad;
         listCart[objIndex].subtotal = this.calculoSubtotal(newItem);
       }
@@ -102,7 +109,6 @@ export class CartService {
   }
   //Obtener todos los items del carrito
   get getItems() {
-    
     return this.cart.getValue();
   }
   //Gestiona el conteo de los items del carrito como un Observable
@@ -110,38 +116,37 @@ export class CartService {
     this.qtyItems.next(this.quantityItems());
     return this.qtyItems.asObservable();
   }
-  setItems(){
+  setItems() {
     return this.cart.getValue();
   }
-  quantityItems(){
+  quantityItems() {
     let listCart = this.cart.getValue();
     let sum = 0;
     if (listCart != null) {
-      
       //Sumando las cantidades de cada uno de los items del carrito
-     listCart.forEach((obj) => {
-       sum +=  obj.cantidad;
-     });
-      
+      listCart.forEach((obj) => {
+        sum += obj.cantidad;
+      });
     }
     return sum;
   }
-//Calcula y retorna el total de los items del carrito
-public getTotal(): number {//Total antes de impuestos
-  let total = 0;
-  let listCart = this.cart.getValue();
-  if (listCart != null) {
-     //Sumando los subtotales de cada uno de los items del carrito
-   
-    listCart.forEach((item: ItemCart, index) => {
-      total += item.subtotal;
-    });
+  //Calcula y retorna el total de los items del carrito
+  public getTotal(): number {
+    //Total antes de impuestos
+    let total = 0;
+    let listCart = this.cart.getValue();
+    if (listCart != null) {
+      //Sumando los subtotales de cada uno de los items del carrito
+
+      listCart.forEach((item: ItemCart, index) => {
+        total += item.subtotal;
+      });
+    }
+
+    return total;
   }
 
-  return total;
-}
-
-/*Calcula y retorna el total de los items del carrito
+  /*Calcula y retorna el total de los items del carrito
 public getTotal(): number {
   let subtotal = 0;
   let total = 0;
@@ -166,4 +171,15 @@ public getTotal(): number {
     //Actualizar la información en el localStorage
     this.saveCart();
   }
+
+  refrescarCarrito() {
+    this.cart = new BehaviorSubject<any>(
+      JSON.parse(localStorage.getItem('pedidoMesa' + this.idMesa))
+    );
+
+    //Establecer un observable para los datos del carrito
+    this.currentDataCart$ = this.cart.asObservable();
+  }
 }
+
+

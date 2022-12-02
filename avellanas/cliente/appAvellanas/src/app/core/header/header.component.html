@@ -28,6 +28,7 @@
         <div class="container-fluid px-lg-5">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <a class="navbar-brand" [routerLink]="['/']">Heladería Avellanas</a>
+                
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -38,12 +39,15 @@
                             <a class="nav-link" [routerLink]="['/home/acerca-de']">Acerca de<span
                                     class="sr-only"></span></a>
                         </li>
+                        <li class="nav-item" [hidden]="isAutenticated">
+                            <a class="nav-link" [routerLink]="['/productos']" >Productos</a>
+                        </li>
                     </ul>
                     <div *ngIf="isAutenticated" [ngSwitch]="currentUser.user.rol">
                         <div *ngSwitchCase="'Cliente'">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link" [routerLink]="['/productos']">Productos</a>
+                                    <a class="nav-link" [routerLink]="['/cliente-pedido']">Pedido</a>
                                 </li>
                             </ul>
                         </div>
@@ -79,7 +83,6 @@
                         </div>
                     </div>
 
-
                     <ul class="navbar-nav1 ml-auto">
                         <span class="mat-caption" *ngIf="isAutenticated"> {{currentUser.user.nombre+"
                             "+currentUser.user.apellido1}}</span>
@@ -98,12 +101,6 @@
                                 <span> Cerrar Sesión </span>
                             </a>
                         </mat-menu>
-                        |
-                        <button mat-icon-button matBadgeColor="accent" [matBadge]="qtyItems.toString()"
-                            [hidden]="!isAutenticated" [routerLink]="'/pedido'" [routerLinkActive]="'mat-raised-button'"
-                            aria-label="Cantidad">
-                            <mat-icon>shopping_cart</mat-icon>
-                        </button>
                     </ul>
                 </div>
             </nav>

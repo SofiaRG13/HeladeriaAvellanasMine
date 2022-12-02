@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { GenericService } from 'src/app/share/generic.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/share/authentication.service';
+import { CartManyService } from 'src/app/share/cartMany.service';
 
 @Component({
   selector: 'app-mesas',
@@ -14,15 +15,18 @@ export class MesasComponent {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   restaurantesList: any;
+  respUpdate: any;
   currentUser: any;
   idRestaurante: number;
   isMesero: boolean = false;
+  isLibre: boolean = false;
 
   constructor(
     private router: Router,
     private authService: AuthenticationService,
     private route: ActivatedRoute,
-    private gService: GenericService
+    private gService: GenericService,
+    private cartService: CartManyService
   ) {
     //Subscribirse para obtener el usuario autenticado
     this.authService.currentUser.subscribe((x) => (this.currentUser = x));
@@ -33,10 +37,10 @@ export class MesasComponent {
 
   listaMesas(value: number) {
     const userRole = this.currentUser.user.rol;
-    if(userRole==="Mesero"){
-      this.isMesero=true;
+    if (userRole === 'Mesero') {
+      this.isMesero = true;
       this.idRestaurante = this.currentUser.user.idRestaurante;
-    }else{
+    } else {
       this.idRestaurante = value;
     }
     //Ruta de API
@@ -67,10 +71,34 @@ export class MesasComponent {
       relativeTo: this.route,
     });
   }
-  
-  mesaPedido(idMesa:number) {
+
+  mesaPedido(idMesa: number) {
+    this.cartService.idMesa = idMesa;
+    this.cartService.refrescarCarrito();
     this.router.navigate(['/mesas-pedido/', idMesa], {
       relativeTo: this.route,
     });
+  }
+
+  updateMesaEstadoOcupada(idMesa: number){
+    this.gService
+      .updateState('mesas/updateEstadoOcupada',idMesa)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        // console.log(data);
+        this.respUpdate = data;
+        this.listaMesas(this.idRestaurante);
+      });
+  }
+
+  updateMesaEstadoDesocupada(idMesa: number){
+    this.gService
+      .updateState('mesas/updateEstadoDesocupada',idMesa)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        // console.log(data);
+        this.respUpdate = data;
+        this.listaMesas(this.idRestaurante);
+      });
   }
 }

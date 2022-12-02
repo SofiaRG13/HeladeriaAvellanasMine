@@ -27,18 +27,16 @@
     <div class="row">
 
       <div class="col-lg-3 col-md-6 mb-4 pb-2" *ngFor="let item of datos">
-        <div class="menu-restaurante">
 
+        <div class="menu-restaurante">
           <div>
             <h4 class="font-weight-bold text-black mb-0">{{ item.codigo}}</h4>
           </div>
+
           <div [ngSwitch]="item.estado">
             <div *ngSwitchCase="'Desocupada'"><img src="../../../assets/images/mesa-desocupada.png"></div>
             <div *ngSwitchCase="'Ocupada'"><img src="../../../assets/images/mesa-ocupada.png"></div>
-            <div *ngSwitchCase="'Reservada'"><img src="../../../assets/images/mesa-reservada.png"></div>
             <div *ngSwitchCase="'Inactiva'"><img src="../../../assets/images/mesa-inactiva.png"></div>
-            <div *ngSwitchCase="'Por_Pagar'"><img src="../../../assets/images/mesa-porPagar.png"></div>
-            <div *ngSwitchCase="'Pedido_Registrado'"><img src="../../../assets/images/mesa-pedidoRegistrado.png"></div>
             <div *ngSwitchDefault><img src="../../../assets/images/mesa-inactiva.png" class="img"></div>
           </div>
           <br>
@@ -46,18 +44,34 @@
           <h5 class="font-weight-bold mb-4">Capacidad: {{ item.capacidad}}</h5>
 
           <div>
-            <button style="margin-right: 20px;" mat-mini-fab color="accent" matTooltip="Detalle Mesa"
+            <button mat-mini-fab color="accent" matTooltip="Detalle Mesa"
               aria-label="Detalle Mesa" color="primary" (click)="detalleMesa(item.id)">
               <mat-icon class="mat-18">info</mat-icon>
             </button>
 
+            <button style="margin-right: 20px; margin-left: 20px;" mat-mini-fab color="accent" matTooltip="Estado Mesa"
+              aria-label="Estado Mesa" color="primary" *ngIf="item.estado != 'Inactiva'"
+              
+              (click)="item.estado=='Desocupada'
+              ? updateMesaEstadoOcupada(item.id)
+              : item.estado=='Ocupada'
+              ? updateMesaEstadoDesocupada(item.id)
+              : null">
+
+              <span *ngIf="item.estado=='Desocupada'">
+                <mat-icon class="mat-18">lock_open</mat-icon>
+              </span>
+              <span *ngIf="item.estado=='Ocupada'">
+                <mat-icon class="mat-18">lock</mat-icon>
+              </span>
+
+            </button>
+
             <button mat-mini-fab color="accent" matTooltip="Comprar" aria-label="Comprar" color="primary"
-              (click)="mesaPedido(item.id)">
-              <mat-icon class="mat-18">add_shopping_cart</mat-icon>
-              <br>
+              *ngIf="item.estado != 'Inactiva'" (click)="mesaPedido(item.id)">
+              <mat-icon class="mat-18">assignment</mat-icon>
             </button>
           </div>
-
         </div>
       </div>
     </div>

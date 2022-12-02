@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient, EstadoMesa } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 //Obtener listado
@@ -60,6 +60,36 @@ module.exports.updateMesa = async (infoMesa, response, next) => {
       capacidad: mesa.capacidad,
       codRestaurante: mesa.codRestaurante,
       estado: mesa.estado,
+    },
+  });
+  response.json(newMesa);
+};
+
+//Actualizar mesa Estado Ocupada
+module.exports.updateEstadoOcupada = async (infoMesa, response, next) => {
+  let idMesa = parseInt(infoMesa.params.id);
+
+  const newMesa = await prisma.mesa.update({
+    where: {
+      id: idMesa,
+    },
+    data: {
+      estado: EstadoMesa.Ocupada,
+    },
+  });
+  response.json(newMesa);
+};
+
+//Actualizar mesa Estado Desocupada
+module.exports.updateEstadoDesocupada = async (infoMesa, response, next) => {
+  let idMesa = parseInt(infoMesa.params.id);
+
+  const newMesa = await prisma.mesa.update({
+    where: {
+      id: idMesa,
+    },
+    data: {
+      estado: EstadoMesa.Desocupada,
     },
   });
   response.json(newMesa);

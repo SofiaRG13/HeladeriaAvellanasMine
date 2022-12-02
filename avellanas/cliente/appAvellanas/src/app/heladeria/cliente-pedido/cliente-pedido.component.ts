@@ -6,20 +6,20 @@ import {
   NotificacionService,
   TipoMessage,
 } from 'src/app/share/notification.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ProductosDetailComponent } from '../productos-detail/productos-detail.component';
-import { CartManyService } from 'src/app/share/cartMany.service';
+import { CartService } from 'src/app/share/cart.service';
 
 @Component({
-  selector: 'app-mesas-pedido',
-  templateUrl: './mesas-pedido.component.html',
-  styleUrls: ['./mesas-pedido.component.css'],
+  selector: 'app-cliente-pedido',
+  templateUrl: './cliente-pedido.component.html',
+  styleUrls: ['./cliente-pedido.component.css'],
 })
-export class MesasPedidoComponent implements OnInit {
+export class ClientePedidoComponent implements OnInit {
   //productos
   restaurantesList: any;
   idRestaurante: number;
@@ -38,8 +38,6 @@ export class MesasPedidoComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
-  idMesa: number;
-  mesaInfo: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -48,13 +46,13 @@ export class MesasPedidoComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private gService: GenericService,
-    private cartService: CartManyService,
+    private cartService: CartService,
     private dialog: MatDialog,
     private noti: NotificacionService,
     private notificacion: NotificacionService,
     private activeRouter: ActivatedRoute
   ) {
-    this.obtenerMesa();
+    this.listaRestaurantes();
   }
 
   ngOnInit(): void {
@@ -69,19 +67,38 @@ export class MesasPedidoComponent implements OnInit {
     //this.listaPedidos();
     //this.table.dataSource = this.datos;
   }
-  listaPedidos() {
+  listaProductos(value: number) {
+    this.idRestaurante = value;
+    console.log(this.idRestaurante);
+    //Ruta de API
+    if (this.idRestaurante !== undefined) {
+      this.gService
+        .get('restaurante', this.idRestaurante)
+        //.list('producto/')
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data: any) => {
+          console.log(data);
+          this.datos = data.productos;
+        });
+    }
+  }
+
+  limpiarCarrito() {
+    this.cartService.deleteCart();
+  }
+
+  listaRestaurantes() {
+    this.restaurantesList = null;
     this.gService
-      .list('pedido')
+      .list('restaurante')
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
-        this.datos = data;
-        console.log(this.datos);
-        this.dataSource = new MatTableDataSource(this.datos);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        //this.dataSource = this.datos;
+        // console.log(data);
+        this.restaurantesList = data;
       });
   }
+
+
   detallePedido(id: number) {
     this.router.navigate(['/pedido/', id], {
       relativeTo: this.route,
@@ -105,6 +122,7 @@ export class MesasPedidoComponent implements OnInit {
     this.total = this.cartService.getTotal();
     this.noti.mensaje('Pedido', 'Producto eliminado', TipoMessage.warning);
   }
+
   registrarOrden() {
     if (this.cartService.getItems != null) {
       //Obtener todo lo necesario para crear la orden
@@ -138,40 +156,6 @@ export class MesasPedidoComponent implements OnInit {
     this.router.navigate(['/productos', id], {
       relativeTo: this.route,
     });
-  }
-
-  obtenerMesa() {
-    //Verificar si se envio un id por parametro para crear formulario para actualizar
-    this.activeRouter.params.subscribe((params: Params) => {
-      //console.log(params);
-      this.idMesa = params['id'];
-      if (this.idMesa !== undefined) {
-        //Obtener producto a mostrar del API
-        this.gService
-          .get('mesas', this.idMesa)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((data: any) => {
-            this.mesaInfo = data;
-            this.listaProductos();
-          });
-      }
-    });
-  }
-
-  listaProductos() {
-    this.idRestaurante = this.mesaInfo.idRestaurante;
-    console.log(this.idRestaurante);
-    //Ruta de API
-    if (this.idRestaurante !== undefined) {
-      this.gService
-        .get('restaurante', this.idRestaurante)
-        //.list('producto/')
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((data: any) => {
-          console.log(data);
-          this.datos = data.productos;
-        });
-    }
   }
 
   comprar(id: number) {

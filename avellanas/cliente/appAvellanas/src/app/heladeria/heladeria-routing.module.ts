@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../share/guards/auth.guard';
+import { ClientePedidoComponent } from './cliente-pedido/cliente-pedido.component';
 import { MesasAllComponent } from './mesas-all/mesas-all.component';
 import { MesasDetailComponent } from './mesas-detail/mesas-detail.component';
 import { MesasFormComponent } from './mesas-form/mesas-form.component';
@@ -15,14 +16,17 @@ import { ProductosComponent } from './productos/productos.component';
 
 const routes: Routes = [
   {
-    path: 'productos',
-    canActivate: [AuthGuard],
-    component: ProductosComponent,
-    data: {
-      rol: ["Administrador", "Cliente"],
-    },
+    path: 'productos',component: ProductosComponent,
   },
   { path: 'pedido', component: PedidoComponent },
+  {
+    path: 'cliente-pedido',
+    canActivate: [AuthGuard],
+    component: ClientePedidoComponent,
+    data: {
+      rol: ['Cliente'],
+    },
+  },
   {
     path: 'mesas',
     canActivate: [AuthGuard],

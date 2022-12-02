@@ -24,7 +24,7 @@
             <div style="margin-top: 6%; margin-bottom: 4%;">
                 <h4>Seleccione un restaurante para ver sus productos:</h4>
                 <mat-form-field class="full-width" style="background-color: white;">
-                    <mat-select #idRestaurante (selectionChange)="listaProductos(idRestaurante.value)"
+                    <mat-select #idRestaurante (selectionChange)="listaProductos(idRestaurante.value)" (selectionChange)="listaProductos(idRestaurante.value)"
                         placeholder="Restaurante">
                         <mat-option *ngFor="let r of restaurantesList" [value]="r.id">
                             {{ r.codigo }}
@@ -50,16 +50,7 @@
                             <button mat-mini-fab color="accent" matTooltip="Detalle Producto"
                                 aria-label="Detalle Producto" color="primary" (click)="detalleProducto(item.id)">
                                 <mat-icon class="mat-18">info</mat-icon>
-                            </button> 
-                            <br>
-                            <!--Boton que agrega los productos al carrito-->
-                            <button class="btn btn-sm btn-secondary" matTooltip="Comprar" 
-                                aria-label="Comprar" color="primary" (click)="comprar(item.id)">
-                                <mat-icon class="mat-18">add_shopping_cart</mat-icon>
-                                <br>
                             </button>
-
-                            <br>
                         </div>
                     </div>
 

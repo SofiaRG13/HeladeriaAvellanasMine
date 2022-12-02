@@ -15,4 +15,8 @@ router.get("/:id",auth.grantRole(["Administrador","Mesero"]),mesaController.getB
 
 router.put("/:id",auth.grantRole(["Administrador"]),mesaController.updateMesa);
 
+router.get("/updateEstadoDesocupada/:id",auth.grantRole(["Administrador","Mesero"]),mesaController.updateEstadoDesocupada);
+
+router.get("/updateEstadoOcupada/:id",auth.grantRole(["Administrador","Mesero"]),mesaController.updateEstadoOcupada);
+
 module.exports = router;

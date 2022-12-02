@@ -18,30 +18,6 @@ module.exports.get = async (request, response, next) => {
           ["estado"]: "Ocupada",
         });
         break;
-      case EstadoMesa.Reservada:
-        listEstados.unshift({
-          ["id"]: element,
-          ["estado"]: "Reservada",
-        });
-        break;
-      case EstadoMesa.Inactiva:
-        listEstados.unshift({
-          ["id"]: element,
-          ["estado"]: "Inactiva",
-        });
-        break;
-      case EstadoMesa.Por_Pagar:
-        listEstados.unshift({
-          ["id"]: element,
-          ["estado"]: "Por_Pagar",
-        });
-        break;
-      case EstadoMesa.Pedido_Registrado:
-        listEstados.unshift({
-          ["id"]: element,
-          ["estado"]: "Pedido_Registrado",
-        });
-        break;
       default:
         listEstados.unshift({
           ["id"]: EstadoMesa.Desocupada,
@@ -63,18 +39,6 @@ module.exports.getById = async (request, response, next) => {
       break;
     case EstadoMesa.Ocupada:
       estado = "Ocupada";
-      break;
-    case EstadoMesa.Reservada:
-      estado = "Reservada";
-      break;
-    case EstadoMesa.Inactiva:
-      estado = "Inactiva";
-      break;
-    case EstadoMesa.Por_Pagar:
-      estado = "Por_Pagar";
-      break;
-    case EstadoMesa.Pedido_Registrado:
-      estado = "Pedido_Registrado";
       break;
     default:
       estado = "Desocupada";

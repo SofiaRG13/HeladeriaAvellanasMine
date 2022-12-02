@@ -53,6 +53,16 @@
           <mat-footer-cell *matFooterCellDef>Total </mat-footer-cell>
           </ng-container>
 
+          <!-- Columna Notas -->
+          <ng-container matColumnDef="notas">
+            <mat-header-cell *matHeaderCellDef> Notas </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <mat-form-field style="background-color: white;">
+                <input matInput id="notas" [(ngModel)]="element.notas" (change)="guardarNotas(element)">
+              </mat-form-field>
+            </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
 
           <!-- Columna Subtotal-->
           <ng-container matColumnDef="subtotal">

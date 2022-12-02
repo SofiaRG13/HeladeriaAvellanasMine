@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { PedidoComponent } from '../heladeria/pedido/pedido.component';
-import { ProductosAllComponent } from '../heladeria/productos-all/productos-all.component';
 // Definir clase con las propiedades que es necesario que gestione el carrito
 export class ItemCart {
   idItem: number;
   product: any;
   cantidad: number;
+  notas: any;
   precio: number;
-  pedido: any;
   subtotal: number;
   descuento: number;
-  idmESA: number;
 }
 @Injectable({
   providedIn: 'root',
@@ -41,9 +38,9 @@ export class CartService {
     newItem.precio = producto.precio;
     newItem.descuento = producto.descuento;
     newItem.cantidad = 1;
+    newItem.notas = producto.notas;
     newItem.subtotal = this.calculoSubtotal(newItem);
     newItem.product = producto;
-    newItem.idmESA = producto.idMesa;
     //Obtenemos el valor actual
     let listCart = this.cart.getValue();
     //Si no es el primer item del carrito
@@ -66,6 +63,11 @@ export class CartService {
           //Actualizar la cantidad de un producto existente
           listCart[objIndex].cantidad += 1;
         }
+        if (producto.hasOwnProperty('notas')) {
+          //Actualizar cantidad
+          listCart[objIndex].notas = producto.notas;
+        }
+        newItem.notas = listCart[objIndex].notas;
         newItem.cantidad = listCart[objIndex].cantidad;
         listCart[objIndex].subtotal = this.calculoSubtotal(newItem);
       }
@@ -89,15 +91,6 @@ export class CartService {
   private calculoSubtotal(item: ItemCart) {
     return item.precio * item.cantidad;
   }
-  /*Calcular el pedido por idMesa */
-public pedidoFiltrado(id:ItemCart){
-  //Obtenemos los datos del carrito
-  let listCart = this.cart.getValue();
-  //Buscamos el item del pedido para filtrar
-  let objIndex = listCart.findIndex((obj) => obj.idItem == id.idmESA);
-  
-};
-
   //Elimina un elemento del carrito
   public removeFromCart(newData: ItemCart) {
     //Obtenemos el valor actual de carrito
@@ -119,7 +112,6 @@ public pedidoFiltrado(id:ItemCart){
     
     return this.cart.getValue();
   }
-  
   //Gestiona el conteo de los items del carrito como un Observable
   get countItems(): Observable<number> {
     this.qtyItems.next(this.quantityItems());
@@ -141,7 +133,6 @@ public pedidoFiltrado(id:ItemCart){
     }
     return sum;
   }
-  
 //Calcula y retorna el total de los items del carrito
 public getTotal(): number {//Total antes de impuestos
   let total = 0;
@@ -156,7 +147,6 @@ public getTotal(): number {//Total antes de impuestos
 
   return total;
 }
-
 
 /*Calcula y retorna el total de los items del carrito
 public getTotal(): number {
@@ -184,4 +174,3 @@ public getTotal(): number {
     this.saveCart();
   }
 }
-
