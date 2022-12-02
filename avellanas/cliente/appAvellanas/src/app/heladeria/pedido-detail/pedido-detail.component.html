@@ -1,0 +1,32 @@
+<body>
+    <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
+    </div>
+
+    <div class="card container-fluid py-5">
+        <img src='/assets/images/pedido.jpg'  alt="imagen pedido" class="container-fluid">
+        <div class="container">
+            <h4 id="name"> <b>Orden {{pedidoInfo.id}}</b></h4>
+            <h4> <b>Usuario:</b> {{pedidoInfo.usuario.nombre}}</h4>
+            <h4> <b>Rol usuario:</b> {{pedidoInfo.usuario.rol}}</h4>
+            <p> <b>Estado:</b> {{pedidoInfo.estado}}</p>
+            <p> <b>Tipo de pedido:</b> {{pedidoInfo.tipoPedido}}</p>
+            <p> <b>Mesa:</b> {{pedidoInfo.mesa.codigo}}</p>
+            <p> <b>Fecha del pedido:</b> {{pedidoInfo.fechaPedido}}</p>
+
+            <p> <b>Detalle del pedido:</b> </p>
+            <ul *ngIf="pedidoInfo.productos">
+                <li *ngFor="let item of pedidoInfo.productos">Producto: {{item.producto.nombre}}</li>
+                <li *ngFor="let item of pedidoInfo.productos">Precio: {{item.producto.precio | currency:'₡'}}</li>
+                <li *ngFor="let item of pedidoInfo.productos">Cantidad: {{item.cantidad}}</li>
+                <li *ngFor="let item of pedidoInfo.productos">Notas: {{item.notas}}</li>
+
+            </ul> 
+
+            <p> <b>Subtotal:</b> {{pedidoInfo.subtotal | currency:'₡'}}</p>
+            <p> <b>Descuento:</b> {{pedidoInfo.descuento | currency:'₡'}}</p>
+            <p> <b>Impuesto:</b> {{pedidoInfo.impuesto | currency:'₡'}}</p>
+            <p> <b>Total:</b> {{pedidoInfo.total | currency:'₡'}}</p>
+        </div>
+        <a [routerLink]="['/pedido/']" class="btn btn-sm btn-secondary" id="btnRegresar">Regresar</a>
+    </div>
+</body>

@@ -1,0 +1,21 @@
+<body>
+    <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
+    </div>
+
+    <div class="card container-fluid py-5">
+        <img src={{productoInfo.imagen}} alt="imagen producto" class="container-fluid">
+        <div class="container">
+            <p id="name">{{productoInfo.nombre}}</p>
+            <h4> <b>Precio:</b> {{productoInfo.precio| currency:'₡'}}</h4>
+            <p> <b>Categoría:</b> {{productoInfo.categoria.categoria}}</p>
+            <p> <b>Descripción:</b> {{productoInfo.descripcion}}</p>
+            <p> <b>Ingredientes:</b> {{productoInfo.ingredientes}}</p>
+            <p> <b>Disponible en los Restaurantes:</b></p>
+            <ul *ngIf="productoInfo.restaurantes">
+                <li *ngFor="let item of productoInfo.restaurantes"> {{item.codigo}}</li>
+            </ul> 
+            
+        </div>
+        <a [routerLink]="['/productos']" class="btn btn-sm btn-secondary" id="btnRegresar">Regresar</a>
+    </div>
+</body>

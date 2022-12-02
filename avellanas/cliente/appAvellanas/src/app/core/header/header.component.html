@@ -1,0 +1,115 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+
+    <!---fontawesome cdn---->
+    <!--fontawesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,600;0,700;0,900;1,500;1,600;1,900&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&amp;display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,400&amp;display=swap"
+        rel="stylesheet">
+
+    <title>Heladería Avellanas</title>
+</head>
+
+
+<header class="menu">
+    <div class="menu-1">
+        <div class="container-fluid px-lg-5">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" [routerLink]="['/']">Heladería Avellanas</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" [routerLink]="['/home/acerca-de']">Acerca de<span
+                                    class="sr-only"></span></a>
+                        </li>
+                    </ul>
+                    <div *ngIf="isAutenticated" [ngSwitch]="currentUser.user.rol">
+                        <div *ngSwitchCase="'Cliente'">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['/productos']">Productos</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div *ngSwitchCase="'Mesero'">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['/mesas']">Mesas</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div *ngSwitchDefault>
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['/productos']">Productos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['/mesas']">Mesas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [matMenuTriggerFor]="menu1">Mantenimientos</a>
+                                </li>
+                                <mat-menu #menu1="matMenu">
+                                    <button mat-menu-item [routerLink]="'/productos/all'"
+                                        [routerLinkActive]="'mat-raised-button'">Productos</button>
+                                    <button mat-menu-item [routerLink]="'/mesas/all'"
+                                        [routerLinkActive]="'mat-raised-button'">Mesas</button>
+                                    <button mat-menu-item [routerLink]="'/usuarios/all'"
+                                        [routerLinkActive]="'mat-raised-button'">Usuarios</button>
+                                </mat-menu>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <ul class="navbar-nav1 ml-auto">
+                        <span class="mat-caption" *ngIf="isAutenticated"> {{currentUser.user.nombre+"
+                            "+currentUser.user.apellido1}}</span>
+                        <button mat-icon-button [matMenuTriggerFor]="menu2">
+                            <mat-icon class="user" [ngStyle]="{'color': isAutenticated ? '#ff736f': '#ff736f'}">
+                                person
+                            </mat-icon>
+                        </button>
+                        <mat-menu #menu2="matMenu">
+                            <a mat-menu-item *ngIf="!(isAutenticated)" (click)="login()">
+                                <mat-icon>person_add</mat-icon>
+                                <span> Iniciar Sesión </span>
+                            </a>
+                            <a mat-menu-item *ngIf="isAutenticated" (click)="logout()">
+                                <mat-icon>person_remove</mat-icon>
+                                <span> Cerrar Sesión </span>
+                            </a>
+                        </mat-menu>
+                        |
+                        <button mat-icon-button matBadgeColor="accent" [matBadge]="qtyItems.toString()"
+                            [hidden]="!isAutenticated" [routerLink]="'/pedido'" [routerLinkActive]="'mat-raised-button'"
+                            aria-label="Cantidad">
+                            <mat-icon>shopping_cart</mat-icon>
+                        </button>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+
+    </div>
+
+</header>

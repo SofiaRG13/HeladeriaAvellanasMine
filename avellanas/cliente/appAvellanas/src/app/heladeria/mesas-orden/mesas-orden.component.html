@@ -1,0 +1,45 @@
+<body>
+    <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header"> </div>
+ 
+  <div
+    class="jumbotron jumbotron-fluid page-header"
+    style="margin-bottom: 90px">
+    <div class="container text-center">
+      <div class="d-inline-flex align-items-center text-white">
+        <p class="m-0"><a class="text-white" href="/">Inicio</a></p>
+        <i class="fa fa-circle "></i>
+        <p class="m-0">Mesas</p>
+      </div>
+    </div>
+  </div>
+
+  <mat-grid-list [cols]="4" rowHeight="12em" gutterSize="10px" *ngIf="datos">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 mb-4 pb-2" *ngFor="let item of datos">
+        <div class="menu-restaurante">
+          <div >
+            <h4 class="font-weight-bold text-black mb-0">
+              {{ item.codigo}}
+            </h4>
+          </div>
+          <div>
+            <img
+              src="./assets/images/mesa.png"
+            />
+          </div>
+
+        <br>
+          <h5 class="font-weight-bold mb-4">{{ item.estado}}</h5>
+          <h5 class="font-weight-bold mb-4">{{ item.restaurantes}</h5>
+          <br>
+        </div>
+      </div>
+    </div>
+  </mat-grid-list>
+</body>
+
+<script>
+  $("#myModal").on("shown.bs.modal", function () {
+    $("#myInput").trigger("focus");
+  });
+</script>

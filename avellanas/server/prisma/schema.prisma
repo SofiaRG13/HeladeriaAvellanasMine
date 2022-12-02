@@ -1,0 +1,161 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  nombre   String? //Puede ser nulo
+  apellido1   String? //Puede ser nulo
+  apellido2   String? //Puede ser nulo
+  contrasenna String
+  rol     Rol    @default(Cliente)
+  restaurante Restaurante?  @relation(fields: [idRestaurante], references: [id])
+  idRestaurante Int?
+  pedidos Pedido[]
+  cupones CuponUsuario[] //Relación explícita
+}
+
+enum Rol {
+  Administrador
+  Mesero
+  Cliente
+}
+
+model Restaurante {
+  id       Int     @id @default(autoincrement())
+  codigo    String  @unique
+  ubicacion   String
+  usuarios Usuario[]
+  mesas Mesa[]
+  productos Producto[]
+}
+
+model Mesa {
+  id       Int     @id @default(autoincrement())
+  codigo    String  @unique
+  estado   EstadoMesa @default(Desocupada)
+  capacidad   Int
+
+  restaurante    Restaurante  @relation(fields: [idRestaurante], references: [id])
+  idRestaurante Int
+  pedidos Pedido[]
+}
+
+enum EstadoMesa {
+  Desocupada
+  Ocupada
+  Reservada
+  Inactiva
+  Por_Pagar
+  Pedido_Registrado
+}
+
+model Producto {
+  id       Int     @id @default(autoincrement())
+  nombre   String
+  descripcion   String
+  ingredientes   String
+  precio   Decimal  @db.Decimal(10, 2)
+  categoria    ProductoCategoria  @relation(fields: [idCategoria], references: [id])
+  idCategoria Int
+  imagen   String
+
+  restaurantes Restaurante []
+  pedidos DetallePedido[]//Relación explícita
+
+}
+
+model ProductoCategoria {
+  id       Int     @id @default(autoincrement())
+  categoria    String 
+  productos Producto[]
+}
+
+model Pedido {
+  id       Int     @id @default(autoincrement())
+  usuario    Usuario  @relation(fields: [idUsuario], references: [id])
+  idUsuario  Int
+  estado EstadoPedido @default(Registrada)
+  tipoPedido   TipoPedido    @default(En_Restaurante)
+  mesa    Mesa?  @relation(fields: [idMesa], references: [id])
+  idMesa  Int?
+  fechaPedido DateTime @default(now())
+  subtotal   Decimal  @db.Decimal(10, 2)
+  descuento   Decimal  @db.Decimal(10, 2)
+  impuesto   Decimal  @db.Decimal(10, 2)
+  total   Decimal  @db.Decimal(10, 2)
+
+  productos DetallePedido[] //Relación explícita
+  pagos Pago[]
+}
+
+model DetallePedido {
+  producto    Producto  @relation(fields: [idProducto], references: [id])
+  idProducto Int
+  pedido    Pedido  @relation(fields: [idPedido], references: [id])
+  idPedido Int
+  cantidad Int
+  notas String
+
+  @@id([idPedido, idProducto]) //Creacion llave primaria compuesta
+}
+
+model Cupon {
+  id       Int     @id @default(autoincrement())
+  descripcion String
+  descuento Decimal  @db.Decimal(10, 2)
+
+  usuarios CuponUsuario[] //Relación explícita
+}
+
+model CuponUsuario {
+  usuario    Usuario  @relation(fields: [idUsuario], references: [id])
+  idUsuario  Int
+  cupon    Cupon  @relation(fields: [idCupon], references: [id])
+  idCupon  Int
+
+  estado EstadoCupon @default(Activo)
+
+  @@id([idUsuario, idCupon]) //Creacion llave primaria compuesta
+}
+
+enum EstadoCupon {
+  Activo
+  Inactivo
+  Vencido
+}
+
+enum EstadoPedido {
+  Registrada
+  En_Proceso
+  Pendiente
+  Entregada
+  Por_Pagar
+}
+
+enum TipoPedido {
+  En_linea
+  En_Restaurante
+}
+
+model Pago {
+  id       Int     @id @default(autoincrement())
+  pedido    Pedido  @relation(fields: [idPedido], references: [id])
+  idPedido Int
+  tipoPago TipoPago @default(Tarjeta)
+  totalPago   Decimal  @db.Decimal(10, 2)
+}
+
+enum TipoPago {
+  Efectivo
+  Tarjeta
+}

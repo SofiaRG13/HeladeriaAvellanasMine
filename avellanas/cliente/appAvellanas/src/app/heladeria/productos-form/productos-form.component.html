@@ -1,0 +1,123 @@
+<body>
+  <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
+  </div>
+
+  <div class="jumbotron jumbotron-fluid page-header" style="margin-bottom: 30px;">
+    <div class="container text-center py-5">
+      <h1 class="text-white display-3 mt-lg-5">Mantenimiento Producto</h1>
+      <div class="d-inline-flex align-items-center text-white">
+        <p class="m-0"><a class="text-white" href="/">Inicio</a></p>
+        <i class="fa fa-circle px-3"></i>
+        <p class="m-0">Mantenimiento Producto</p>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="productosForm" novalidate (ngSubmit)="isCreate ? crearProducto(): actualizarProducto()">
+    <input type="hidden" formControlName="id" />
+    <mat-card class="shipping-card">
+      <mat-card-header>
+        <mat-card-title>{{titleForm}} Producto</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput #nombreProducto maxlength="50" placeholder="Nombre" formControlName="nombre">
+              <mat-hint align="end">{{nombreProducto.value.length}} / 50</mat-hint>
+              <mat-error *ngIf="productosForm.controls['nombre'].hasError('required')">
+                Nombre es <strong>requerido</strong>
+                Mínimo de carácteres <strong>5</strong>
+              </mat-error>
+              <mat-error *ngIf="productosForm.controls['nombre'].hasError('pattern')">
+                Nombre no cumple con el formato requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput #descripcionProducto maxlength="200" placeholder="Descripción" formControlName="descripcion">
+              <mat-hint align="end">{{descripcionProducto.value.length}} / 200</mat-hint>
+              <mat-error *ngIf="productosForm.controls['descripcion'].hasError('required')">
+                Descripción es <strong>requerido</strong>
+                Mínimo de carácteres <strong>5</strong>
+              </mat-error>
+              <mat-error *ngIf="productosForm.controls['descripcion'].hasError('pattern')">
+                Descripcion no cumple con el formato requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput #ingredientesProducto maxlength="200" placeholder="Ingredientes"
+                formControlName="ingredientes">
+              <mat-hint align="end">{{ingredientesProducto.value.length}} / 200</mat-hint>
+              <mat-error *ngIf="productosForm.controls['ingredientes'].hasError('required')">
+                Ingredientes es <strong>requerido</strong>.
+                Mínimo de carácteres <strong>5</strong>
+              </mat-error>
+              <mat-error *ngIf="productosForm.controls['ingredientes'].hasError('pattern')">
+                Ingredientes no cumple con el formato requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Precio" formControlName="precio">
+              <mat-error *ngIf="productosForm.controls['precio'].hasError('required')">
+                Precio es <strong>requerido</strong>
+              </mat-error>
+              <mat-error *ngIf="productosForm.controls['precio'].hasError('pattern')">
+                Precio solo permite números
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+
+        </div>
+
+        <div class="row">
+          <div class="col" *ngIf="categoriasList">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Categoria" formControlName="idCategoria">
+                <mat-option *ngFor="let g of categoriasList" [value]="g.id">
+                  {{ g.categoria }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productosForm.controls['idCategoria'].hasError('required')">
+                Categoria es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col" *ngIf="restaurantesList">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Restaurantes" formControlName="restaurantes" multiple>
+                <mat-option *ngFor="let r of restaurantesList" [value]="r.id">
+                  {{ r.codigo }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productosForm.controls['restaurantes'].hasError('required')">
+                Restaurantes es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" style="border-color: transparent;">
+          <button class="btn btn-sm btn-secondary" id="btnGuardar" color="primary" type="submit" >Guardar</button>
+          <mat-button-toggle  class="btn btn-sm btn-secondary" id="btnLimpiar" *ngIf="isCreate" (click)="onReset()">Limpiar</mat-button-toggle>
+          <mat-button-toggle  class="btn btn-sm btn-secondary" id="btnCancelar" (click)="onBack()">Cancelar</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <!-- <button mat-raesed-button color="primary" type="submit">Guardar</button> -->
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</body>

@@ -1,0 +1,23 @@
+<body>
+    <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
+    </div>
+
+    <div class="card container-fluid py-5">
+        <div [ngSwitch]="mesaInfo.estado">
+            <div *ngSwitchCase="'Desocupada'"><img src="../../../assets/images/mesa-desocupada.png" ></div>
+            <div *ngSwitchCase="'Ocupada'"><img src="../../../assets/images/mesa-ocupada.png"></div>
+            <div *ngSwitchCase="'Reservada'"><img src="../../../assets/images/mesa-reservada.png"></div>
+            <div *ngSwitchCase="'Inactiva'"><img src="../../../assets/images/mesa-inactiva.png"></div>
+            <div *ngSwitchCase="'Por_Pagar'"><img src="../../../assets/images/mesa-porPagar.png"></div>
+            <div *ngSwitchCase="'Pedido_Registrado'"><img src="../../../assets/images/mesa-pedidoRegistrado.png"></div>
+            <div *ngSwitchDefault><img src="../../../assets/images/mesa-inactiva.png" class="img"></div>
+          </div>
+        <div class="container">
+            <p id="name">Código de Mesa: {{mesaInfo.codigo}}</p>
+            <h4> <b>Estado:</b> {{mesaInfo.estado}}</h4>
+            <p> <b>Capacidad:</b> {{mesaInfo.capacidad}}</p>
+            <p> <b>Restaurante:</b> {{mesaInfo.restaurante.codigo}}</p>    
+        </div>
+        <a [routerLink]="['/mesas']" class="btn btn-sm btn-secondary" id="btnRegresar">Regresar</a>
+    </div>
+</body>

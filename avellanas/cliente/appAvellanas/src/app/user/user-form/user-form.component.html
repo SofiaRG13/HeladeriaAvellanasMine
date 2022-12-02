@@ -1,0 +1,135 @@
+<body>
+  <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
+  </div>
+
+  <div class="jumbotron jumbotron-fluid page-header" style="margin-bottom: 30px;">
+    <div class="container text-center py-5">
+      <h1 class="text-white display-3 mt-lg-5">Mantenimiento Usuario</h1>
+      <div class="d-inline-flex align-items-center text-white">
+        <p class="m-0"><a class="text-white" href="/">Inicio</a></p>
+        <i class="fa fa-circle px-3"></i>
+        <p class="m-0">Mantenimiento Usuario</p>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="userForm" novalidate (ngSubmit)="isCreate ? crearUsuario(): actualizarUsuario()">
+    <input type="hidden" formControlName="id" />
+    <mat-card class="shipping-card">
+      <mat-card-header>
+        <mat-card-title>{{titleForm}} Usuario</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput #nombre maxlength="50" placeholder="Nombre" formControlName="nombre">
+              <mat-hint align="end">{{nombre.value.length}} / 50</mat-hint>
+              <mat-error *ngIf="userForm.controls['nombre'].hasError('required')">
+                Nombre es <strong>requerido</strong>
+                Mínimo de carácteres <strong>5</strong>
+              </mat-error>
+              <mat-error *ngIf="userForm.controls['nombre'].hasError('pattern')">
+                Nombre no cumple con el formato requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput #apellido1 maxlength="100" placeholder="Apellido 1" formControlName="apellido1">
+              <mat-hint align="end">{{apellido1.value.length}} / 100</mat-hint>
+              <mat-error *ngIf="userForm.controls['apellido1'].hasError('required')">
+                Apellido 1 es <strong>requerido</strong>
+                Mínimo de carácteres <strong>2</strong>
+              </mat-error>
+              <mat-error *ngIf="userForm.controls['apellido1'].hasError('pattern')">
+                Apellido 1 no cumple con el formato requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput #apellido2 maxlength="100" placeholder="Apellido 2" formControlName="apellido2">
+              <mat-hint align="end">{{apellido2.value.length}} / 100</mat-hint>
+              <mat-error *ngIf="userForm.controls['apellido2'].hasError('required')">
+                Apellido 2 es <strong>requerido</strong>
+                Mínimo de carácteres <strong>2</strong>
+              </mat-error>
+              <mat-error *ngIf="userForm.controls['apellido2'].hasError('pattern')">
+                Apellido 2 no cumple con el formato requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput #email maxlength="200" placeholder="Email" formControlName="email">
+              <mat-hint align="end">{{email.value.length}} / 200</mat-hint>
+              <mat-error *ngIf="userForm.controls['email'].hasError('required')">
+                Email es <strong>requerido</strong>.
+                Mínimo de carácteres <strong>10</strong>
+              </mat-error>
+              <mat-error *ngIf="userForm.controls['email'].hasError('pattern')">
+                Email no cumple con el formato requerido
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width" >
+              <mat-label>Contraseña</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña" 
+                formControlName="contrasenna" [readonly]="!isCreate"/>
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide" [disabled]="!isCreate">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="errorHandling('contrasenna', 'required')">
+                Contraseña es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" *ngIf="rolesList">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Rol" formControlName="rol" (selectionChange)="mostrarRestauranteForm()">
+                <mat-option *ngFor="let r of rolesList" [value]="r.id">
+                  {{ r.nombre }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.controls['rol'].hasError('required')">
+                Rol es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col" *ngIf="restaurantesList">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Restaurante" formControlName="idRestaurante" [disabled]="isMesero">
+                <mat-option *ngFor="let r of restaurantesList" [value]="r.id">
+                  {{ r.codigo }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="userForm.controls['idRestaurante'].hasError('required')">
+                Restaurante es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" style="border-color: transparent;">
+          <button class="btn btn-sm btn-secondary" id="btnGuardar" color="primary" type="submit">Guardar</button>
+          <mat-button-toggle class="btn btn-sm btn-secondary" id="btnLimpiar" *ngIf="isCreate" (click)="onReset()">
+            Limpiar</mat-button-toggle>
+          <mat-button-toggle class="btn btn-sm btn-secondary" id="btnCancelar" (click)="onBack()">Cancelar
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <!-- <button mat-raesed-button color="primary" type="submit">Guardar</button> -->
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</body>

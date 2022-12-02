@@ -1,0 +1,17 @@
+.full-width {
+    width: 100%;
+}
+
+#btnRegistrar {
+    color: white;
+    background-color: #62C3E7;
+    border-color: #62C3E7;
+    margin: 2px;
+  }
+  
+  #btnCancelar {
+    color: white;
+    background-color: #53717c;
+    border-color: #28657c;
+    margin: 2px;
+  }

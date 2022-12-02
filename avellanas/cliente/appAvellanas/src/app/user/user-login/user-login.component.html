@@ -1,0 +1,43 @@
+<form [formGroup]="formulario" (ngSubmit)="submitForm()" novalidate>
+    <mat-card class="shipping-card">
+      <mat-card-header>
+        <mat-card-title>Inicio Sesión</mat-card-title>
+      </mat-card-header> 
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput type="text" placeholder="Email usuario" formControlName="email" />
+             <mat-error *ngIf="errorHandling('email', 'required')">
+                Email es <strong>requerido</strong>
+              </mat-error>
+              <mat-error *ngIf="errorHandling('email','email')">
+                Verifique el <strong>formato</strong> del email
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password usuario" formControlName="contrasenna" />
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+           <mat-error *ngIf="errorHandling('contrasenna', 'required')">
+            Contraseña es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" id="btnLogin">Login</button>
+        <button mat-raised-button type="reset" (click)="onReset()" id="btnCancelar">Cancelar</button>
+      </mat-card-actions>
+    </mat-card>
+    </form>
+  
+  

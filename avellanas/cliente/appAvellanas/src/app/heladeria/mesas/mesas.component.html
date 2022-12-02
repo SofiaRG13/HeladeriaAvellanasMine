@@ -1,0 +1,65 @@
+<body>
+  <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header"> </div>
+
+  <div class="jumbotron jumbotron-fluid page-header" style="margin-bottom: 90px;">
+    <div class="container text-center py-5">
+      <h1 class="text-white display-3 mt-lg-5">Mesas</h1>
+      <div class="d-inline-flex align-items-center text-white">
+        <p class="m-0"><a class="text-white" href="/">Inicio</a></p>
+        <i class="fa fa-circle px-3"></i>
+        <p class="m-0">Mesas</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-left: 6%;">
+    <h4 [hidden]="isMesero">Seleccione un restaurante para ver sus mesas:</h4>
+    <mat-form-field class="full-width" style="background-color: white;" [hidden]="isMesero">
+      <mat-select #idRestaurante (selectionChange)="listaMesas(idRestaurante.value)" placeholder="Restaurante">
+        <mat-option *ngFor="let r of restaurantesList" [value]="r.id">
+          {{ r.codigo }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-grid-list [cols]="4" rowHeight="12em" gutterSize="10px" *ngIf="datos">
+    <div class="row">
+
+      <div class="col-lg-3 col-md-6 mb-4 pb-2" *ngFor="let item of datos">
+        <div class="menu-restaurante">
+
+          <div>
+            <h4 class="font-weight-bold text-black mb-0">{{ item.codigo}}</h4>
+          </div>
+          <div [ngSwitch]="item.estado">
+            <div *ngSwitchCase="'Desocupada'"><img src="../../../assets/images/mesa-desocupada.png"></div>
+            <div *ngSwitchCase="'Ocupada'"><img src="../../../assets/images/mesa-ocupada.png"></div>
+            <div *ngSwitchCase="'Reservada'"><img src="../../../assets/images/mesa-reservada.png"></div>
+            <div *ngSwitchCase="'Inactiva'"><img src="../../../assets/images/mesa-inactiva.png"></div>
+            <div *ngSwitchCase="'Por_Pagar'"><img src="../../../assets/images/mesa-porPagar.png"></div>
+            <div *ngSwitchCase="'Pedido_Registrado'"><img src="../../../assets/images/mesa-pedidoRegistrado.png"></div>
+            <div *ngSwitchDefault><img src="../../../assets/images/mesa-inactiva.png" class="img"></div>
+          </div>
+          <br>
+          <h5 class="font-weight-bold mb-4">Estado: {{ item.estado}}</h5>
+          <h5 class="font-weight-bold mb-4">Capacidad: {{ item.capacidad}}</h5>
+
+          <div>
+            <button style="margin-right: 20px;" mat-mini-fab color="accent" matTooltip="Detalle Mesa"
+              aria-label="Detalle Mesa" color="primary" (click)="detalleMesa(item.id)">
+              <mat-icon class="mat-18">info</mat-icon>
+            </button>
+
+            <button mat-mini-fab color="accent" matTooltip="Comprar" aria-label="Comprar" color="primary"
+              (click)="mesaPedido(item.id)">
+              <mat-icon class="mat-18">add_shopping_cart</mat-icon>
+              <br>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </mat-grid-list>
+</body>

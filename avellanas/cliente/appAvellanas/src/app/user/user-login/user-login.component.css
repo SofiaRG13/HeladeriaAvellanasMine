@@ -1,0 +1,45 @@
+mat-form-field.mat-form-field {
+  font-size: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.shipping-card {
+  min-width: 120px;
+  margin: 20px auto;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+#btnLogin {
+  color: white;
+  background-color: #62C3E7;
+  border-color: #62C3E7;
+  margin: 2px;
+}
+
+#btnCancelar {
+  color: white;
+  background-color: #53717c;
+  border-color: #28657c;
+  margin: 2px;
+}

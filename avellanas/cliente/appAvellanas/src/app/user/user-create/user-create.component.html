@@ -1,0 +1,87 @@
+<form [formGroup]="formCreate" novalidate>
+    <mat-card class="shipping-card">
+        <mat-card-header>
+            <mat-card-title>Registrar Usuario </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" placeholder="Nombre usuario" formControlName="nombre" />
+                        <mat-error *ngIf="errorHandling('nombre', 'required')">
+                            Nombre es <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="errorHandling('nombre', 'pattern')">
+                            Nombre no cumple con el formato requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Apellido 1</mat-label>
+                        <input matInput type="text" placeholder="Apellido 1" formControlName="apellido1" />
+                        <mat-error *ngIf="errorHandling('apellido1', 'required')">
+                            Apellido 1 es <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="errorHandling('apellido1', 'pattern')">
+                            Apellido 1 no cumple con el formato requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Apellido 2</mat-label>
+                        <input matInput type="text" placeholder="Apellido 2" formControlName="apellido2" />
+                        <mat-error *ngIf="errorHandling('apellido2', 'required')">
+                            Apellido 2 es <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="errorHandling('apellido2', 'pattern')">
+                            Apellido 2 no cumple con el formato requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" placeholder="Email usuario" formControlName="email" />
+                        <mat-error *ngIf="errorHandling('email', 'required')">
+                            Email es <strong>requerido</strong>
+                        </mat-error>
+                        <mat-error *ngIf="errorHandling('email', 'pattern')">
+                            Email no cumple con el formato requerido
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contraseña"
+                            formControlName="contrasenna" />
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="errorHandling('contrasenna', 'required')">
+                            Contraseña es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="submitForm()" id="btnRegistrar">Registrar</button>
+            <button mat-raised-button color="accent" type="reset" (click)="onReset()" id="btnCancelar">Cancelar</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

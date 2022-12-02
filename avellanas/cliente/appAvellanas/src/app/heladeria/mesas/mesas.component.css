@@ -1,0 +1,127 @@
+html {
+  font-family: system-ui;
+}
+
+body {
+    margin: 0;
+    margin-bottom: 50%;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #555555;
+    text-align: left;
+
+}
+
+.display-3 {
+  font-size: calc(1.575rem + 3.9vw);
+  line-height: 1.2;
+}
+
+.titulo {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-decoration: overline;
+  text-align: center;
+  color: #c1501ff5;
+  font-family: cursive;
+  line-height: 200px;
+  font-size: 30px;
+  font-family: "Times New Roman", Times, serif;
+  word-spacing: 4px;
+  letter-spacing: 2px;
+
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.column-3 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
+
+#header {
+  background-image: url('/assets/images/1.png');
+  height: 7%;
+}
+
+.page-header {
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(/assets/images/header-mesas.webp), no-repeat center center;
+  background-size: auto;
+}
+
+.menu-restaurante {
+  border-style: double;
+  border-color: #FFC300;
+  width: 50%;
+  border-radius: 10%;
+  text-align: center;
+  margin-left: 25%;
+}
+
+.reservado {
+  border-radius: 10%;
+  background-color: #fdf9c4;
+
+}
+
+.pagar {
+  background-color: #fcd9cb;
+  border-radius: 10%;
+}
+
+.disponible {
+  background-color: #c4e5c9;
+  border-radius: 10%;
+}
+
+hr {
+  background: #FFC300;
+  height: 2.5px;
+  width: 30px;
+  border: none;
+}
+
+h3 {
+  word-spacing: 4px;
+  letter-spacing: 2px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+img {
+  margin-left: 10px auto;
+  float: none;
+  color: antiquewhite;
+  width: 85px;
+}
+
+.full-width {
+  width: 30%;
+}
+
+h4{
+  font-size: 1.2rem;
+  color: #ef7099;
+}
+
+.btn {
+  font-weight: 500;
+  padding: 10px 25px;
+  border-radius: 100px;
+}
+.btn-secondary {
+  color: white;
+  background-color: #62C3E7;
+  border-color: #62C3E7;
+}
+.mat-primary {
+  background-color: #3c788e;
+  margin-bottom: 6%;
+}
