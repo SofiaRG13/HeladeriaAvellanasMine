@@ -52,7 +52,7 @@ module.exports.createPedido = async (infoPedido, response, next) => {
 };
 
 //Actualizar pedido
-module.exports.updatepedido = async (infopedido, response, next) => {
+module.exports.updatePedido = async (infopedido, response, next) => {
   let pedido = infopedido.body;
   let idpedido = parseInt(infopedido.params.id);
 

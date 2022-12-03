@@ -8,6 +8,10 @@ const pedidoController = require("../controllers/pedidoController");
 //Definición de rutas para productoCategoria
 router.get("/", pedidoController.get);
 
+router.post("/",pedidoController.createPedido);
+
 router.get("/:id", pedidoController.getById);
+
+router.put("/:id",pedidoController.updatePedido);
 
 module.exports = router;

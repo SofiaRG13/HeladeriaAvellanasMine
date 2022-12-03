@@ -2,123 +2,90 @@
   <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
   </div>
 
-  <div class="jumbotron jumbotron-fluid page-header" style="margin-bottom: 90px;">
+  <div class="jumbotron jumbotron-fluid page-header" style="margin-bottom: 30px;">
       <div class="container text-center py-5">
-          <h1 class="text-white display-3 mt-lg-5">Pedidos</h1>
+          <h1 class="text-white display-3 mt-lg-5">Mantenimiento Productos</h1>
           <div class="d-inline-flex align-items-center text-white">
               <p class="m-0"><a class="text-white" href="/">Inicio</a></p>
               <i class="fa fa-circle px-3"></i>
-              <p class="m-0">Pedidos</p>
+              <p class="m-0">Mantenimiento Productos</p>
           </div>
       </div>
   </div>
 
-<mat-card class="full-width">
-    <!-- Title of an Card -->
+  <mat-card class="full-width">
+      <!-- Title of an Card -->
+      <mat-card-title>
+          Agregar Producto
+          <a mat-fab matTooltip="Crear Producto" aria-label="Crear Producto" color="primary"
+              (click)="crearProducto()">
+              <mat-icon>add</mat-icon>
+          </a>
+      </mat-card-title>
 
-    <mat-card-content>
-      <div class="mat-elevation-z8"   
-      *ngIf="dataSource"
-     
-      >
-        <table mat-table [dataSource]="dataSource"
-         class="full-width-table"  matSort
-         matSortStart="desc" aria-label="Elements">
-          <!-- Columna nombre -->
-          <ng-container matColumnDef="producto">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Producto</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{ element.product.nombre }}</mat-cell>
-            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-          </ng-container>
-  
-          <!-- Columna precio -->
-          <ng-container matColumnDef="precio">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{ element.precio }}</mat-cell>
-            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-          </ng-container>
+      <mat-card-content>
+          <div class="mat-elevation-z8" *ngIf="dataSource">
+              <table mat-table [dataSource]="dataSource" class="full-width-table" matSort matSortStart="desc"
+                  aria-label="Elements">
+                  <!-- Columna nombre -->
+                  <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Identificador</th>
+                      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+                  </ng-container>
 
-          <!-- Columna Cantidad -->
-          <ng-container matColumnDef="cantidad">
-            <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
-            <mat-cell *matCellDef="let element"> 
-              <mat-form-field style="background-color: white;">
-                  <input matInput id="cantidad " type="number"  
-                  [(ngModel)]="element.cantidad"
-                  (change)="actualizarCantidad(element)"
-                  > 
-              </mat-form-field> 
-              
-          </mat-cell>
-          <mat-footer-cell *matFooterCellDef>Total </mat-footer-cell>
-          </ng-container>
+                  <!-- Columna precio -->
+                  <ng-container matColumnDef="nombre">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre del producto</th>
+                      <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+                  </ng-container>
 
-          <!-- Columna Notas -->
-          <ng-container matColumnDef="notas">
-            <mat-header-cell *matHeaderCellDef> Notas </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <mat-form-field style="background-color: white;">
-                <input matInput id="notas" [(ngModel)]="element.notas" (change)="guardarNotas(element)">
-              </mat-form-field>
-            </mat-cell>
-            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-          </ng-container>
+                  <!-- Columna precio -->
+                  <ng-container matColumnDef="descripcion">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción del producto</th>
+                      <td mat-cell *matCellDef="let row">{{ row.descripcion }}</td>
+                  </ng-container>
 
-          <!-- Columna Subtotal-->
-          <ng-container matColumnDef="subtotal">
-            <mat-header-cell *matHeaderCellDef> Subtotal </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{ element.subtotal | currency }} </mat-cell>
-            <mat-footer-cell *matFooterCellDef >{{total | currency}}</mat-footer-cell>
-          </ng-container>
-          
-          <!--<ng-container matColumnDef="detalle">
-            <th mat-header-cell *matHeaderCellDef>Detalle del Pedido</th>
-            <td mat-cell *matCellDef="let element">
-              <button
-                mat-mini-fab
-                matTooltip="Detalle Videjuego"
-                aria-label="DetalleVidejuego"
-                color="primary"
-                (click)="detallePedido(element.id)"
-              >
-                <mat-icon class="mat-18">info</mat-icon>
-              </button>
-            </td>
-          </ng-container>-->
+                  <!-- Columna precio -->
+                  <ng-container matColumnDef="ingredientes">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ingredientes del producto</th>
+                      <td mat-cell *matCellDef="let row">{{ row.ingredientes }}</td>
+                  </ng-container>
 
-          <ng-container matColumnDef="acciones">
-            <mat-header-cell *matHeaderCellDef> Acciones</mat-header-cell>
-            <mat-cell *matCellDef="let element"> 
-                <button mat-icon-button (click)="eliminarItem(element)">
-                <mat-icon>delete</mat-icon>
-                </button>
-            </mat-cell>
-            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
-          </ng-container>
+                  <!-- Columna precio -->
+                  <ng-container matColumnDef="precio">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio del producto</th>
+                      <td mat-cell *matCellDef="let row">{{ row.precio }}</td>
+                  </ng-container>
 
-  
-           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let element; columns: displayedColumns"></mat-row>
-        <mat-footer-row *matFooterRowDef="displayedColumns" class="footer-row"></mat-footer-row>
-      </table>
-  
-        <mat-paginator
-          #paginator
-          [length]="dataSource?.data?.length"
-          [pageIndex]="0"
-          [pageSize]="5"
-          [pageSizeOptions]="[3, 5, 10]"
-          aria-label="Seleccione una pagina"
-        >
-        </mat-paginator>
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-flat-button color="accent" (click)="registrarOrden()" >
-          Comprar
-          <mat-icon>shopping_bag</mat-icon> 
-          </button>
-    </mat-card-actions>
+                  <!-- Columna precio -->
+                  <ng-container matColumnDef="idCategoria">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Categoria del producto</th>
+                      <td mat-cell *matCellDef="let row">{{ row.categoria.categoria }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="acciones">
+                      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                      <td mat-cell *matCellDef="let row">
+                          <button mat-mini-fab matTooltip="Detalle Producto" aria-label="DetalleProducto"
+                              color="primary" (click)="detalleProducto(row.id)">
+                              <mat-icon class="mat-18">info</mat-icon>
+                          </button>
+                          <button mat-mini-fab matTooltip="Actualizar Producto" aria-label="Actualizar Producto"
+                              color="primary" (click)="actualizarProducto(row.id)">
+                              <mat-icon class="mat-18">edit</mat-icon>
+                          </button>
+                      </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+
+              <mat-paginator #paginator [length]="dataSource?.data?.length" [pageIndex]="0" [pageSize]="5"
+                  [pageSizeOptions]="[3, 5, 10]" aria-label="Seleccione una pagina">
+              </mat-paginator>
+          </div>
+      </mat-card-content>
   </mat-card>
-    
+
 </body>

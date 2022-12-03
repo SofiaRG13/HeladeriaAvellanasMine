@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ProductosDetailComponent } from '../productos-detail/productos-detail.component';
 import { CartManyService } from 'src/app/share/cartMany.service';
+import { registerLocaleData } from '@angular/common';
 
 @Component({
   selector: 'app-mesas-pedido',
@@ -25,6 +26,7 @@ export class MesasPedidoComponent implements OnInit {
   idRestaurante: number;
 
   total = 0;
+  impuesto = this.total * 0.13;
   fecha = Date.now();
   qtyItems = 0;
   displayedColumns: string[] = [
@@ -116,6 +118,13 @@ export class MesasPedidoComponent implements OnInit {
       //Datos para el API
       let infoOrden = {
         fechaPedido: new Date(this.fecha),
+        estado: 'Registrada',
+        tipoPedido: 'En_Restaurante',
+        idMesa: this.mesaInfo.id,
+        subtotal: this.total,
+        impuesto: this.impuesto,
+        descuento: 0,
+        total: this.total + this.impuesto,
         productos: detalles,
       };
       this.gService.create('pedido', infoOrden).subscribe((respuesta: any) => {

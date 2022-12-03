@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { AuthenticationService } from './authentication.service';
 // Definir clase con las propiedades que es necesario que gestione el carrito
 export class ItemCart {
   idItem: number;
@@ -18,14 +19,15 @@ export class CartService {
   public currentDataCart$ = this.cart.asObservable(); //Tenemos un observable con el valor actual del BehaviorSubject
   public qtyItems = new Subject<number>();
   constructor() {
+    
     //Obtener los datos de la variable orden guardada en el localStorage
     this.cart = new BehaviorSubject<any>(
       JSON.parse(localStorage.getItem('detallepedido'))
     );
-
-
+    
     //Establecer un observable para los datos del carrito
     this.currentDataCart$ = this.cart.asObservable();
+    
   }
   saveCart(): void {
     localStorage.setItem('detallepedido', JSON.stringify(this.cart.getValue()));
