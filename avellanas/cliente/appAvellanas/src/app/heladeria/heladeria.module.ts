@@ -29,6 +29,8 @@ import { MesasAllComponent } from './mesas-all/mesas-all.component';
 import { MesasDetailComponent } from './mesas-detail/mesas-detail.component';
 import { MesasPedidoComponent } from './mesas-pedido/mesas-pedido.component';
 import { ClientePedidoComponent } from './cliente-pedido/cliente-pedido.component';
+import { ClientePedidosAllComponent } from './cliente-pedidos-all/cliente-pedidos-all.component';
+import { PedidosAllComponent } from './pedidos-all/pedidos-all.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { ClientePedidoComponent } from './cliente-pedido/cliente-pedido.componen
     MesasAllComponent,
     MesasDetailComponent,
     MesasPedidoComponent,
-    ClientePedidoComponent
+    ClientePedidoComponent,
+    ClientePedidosAllComponent,
+    PedidosAllComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +78,9 @@ import { ClientePedidoComponent } from './cliente-pedido/cliente-pedido.componen
     MesasAllComponent,
     MesasDetailComponent,
     MesasPedidoComponent,
-    ClientePedidoComponent
+    ClientePedidoComponent,
+    ClientePedidosAllComponent,
+    PedidosAllComponent
   ],
 })
 export class HeladeriaModule { }

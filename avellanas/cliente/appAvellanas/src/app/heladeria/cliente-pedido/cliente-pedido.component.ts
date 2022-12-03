@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ProductosDetailComponent } from '../productos-detail/productos-detail.component';
 import { CartService } from 'src/app/share/cart.service';
+import { AuthenticationService } from 'src/app/share/authentication.service';
 
 @Component({
   selector: 'app-cliente-pedido',
@@ -23,7 +24,7 @@ export class ClientePedidoComponent implements OnInit {
   //productos
   restaurantesList: any;
   idRestaurante: number;
-
+  currentUser: any;
   total = 0;
   fecha = Date.now();
   qtyItems = 0;
@@ -50,12 +51,16 @@ export class ClientePedidoComponent implements OnInit {
     private dialog: MatDialog,
     private noti: NotificacionService,
     private notificacion: NotificacionService,
-    private activeRouter: ActivatedRoute
+    private activeRouter: ActivatedRoute,
+    private authService: AuthenticationService
   ) {
     this.listaRestaurantes();
   }
 
   ngOnInit(): void {
+    //Subscripción a la información del usuario actual
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+
     this.cartService.currentDataCart$.subscribe((data) => {
       console.log(data);
       this.dataSource = new MatTableDataSource(data);
@@ -97,7 +102,6 @@ export class ClientePedidoComponent implements OnInit {
         this.restaurantesList = data;
       });
   }
-
 
   detallePedido(id: number) {
     this.router.navigate(['/pedido/', id], {
@@ -168,7 +172,7 @@ export class ClientePedidoComponent implements OnInit {
         //Notificar al usuario
         this.notificacion.mensaje(
           'Pedido',
-          'Producto: ' + data.nombre + 'agregado al pedido',
+          'Producto: ' + data.nombre + ' agregado al pedido',
           TipoMessage.success
         );
       });

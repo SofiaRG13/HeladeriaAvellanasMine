@@ -8,11 +8,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-pedido',
-  templateUrl: './pedido.component.html',
-  styleUrls: ['./pedido.component.css'],
+  selector: 'app-cliente-pedidos-all',
+  templateUrl: './cliente-pedidos-all.component.html',
+  styleUrls: ['./cliente-pedidos-all.component.css'],
 })
-export class PedidoComponent {
+export class ClientePedidosAllComponent {
   datos: any;
   destroy$: Subject<boolean> = new Subject<boolean>();
   @ViewChild(MatPaginator) paginator: MatPaginator;

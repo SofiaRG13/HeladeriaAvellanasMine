@@ -63,20 +63,4 @@ export class ProductosComponent {
       relativeTo: this.route,
     });
   }
-
-  comprar(id:number){
-    this.gService
-    .get("producto",id)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((data:any)=>{
-      //Agregar Producto obtenido del API al carrito
-      this.cartService.addToCart(data);
-      //Notificar al usuario
-      this.notificacion.mensaje(
-        'Pedido',
-        'Producto: ' +data.nombre+' agregado al pedido',
-        TipoMessage.success
-      );
-    });
-  }
 }
