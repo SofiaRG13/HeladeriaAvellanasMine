@@ -18,6 +18,9 @@ module.exports.getById = async (request, response, next) => {
     where: {
       id: id,
     },
+    include: {
+      pedidos: true,
+    },
   });
   response.json(usuario);
 };

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { ShareModule } from './share/share.module';
 import { HomeModule } from './home/home.module';
@@ -10,12 +9,12 @@ import { UserModule } from './user/user.module';
 import { HeladeriaModule } from './heladeria/heladeria.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptorService } from './share/http-error-interceptor.service';
-
+import { PedidosModule } from './pedidos/pedidos.module';
+import { ProductosModule } from './productos/productos.module';
+import { MesasModule } from './mesas/mesas.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     //Mantener al inicio
     BrowserModule,
@@ -25,12 +24,20 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
     ShareModule,
     HomeModule,
     UserModule,
-    HeladeriaModule,
-    //Mantener al final 
+    PedidosModule,
+    ProductosModule,
+    MesasModule,
+    //Mantener al final
     AppRoutingModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, 
-    useClass: HttpErrorInterceptorService, multi: true },],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptorService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
+  exports: [],
 })
-export class AppModule { }
+export class AppModule {}

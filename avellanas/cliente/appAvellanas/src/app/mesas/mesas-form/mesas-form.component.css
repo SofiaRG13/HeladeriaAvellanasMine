@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    margin-bottom: -4%;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #555555;
+    text-align: left;
+
+}
+
+#header {
+    background-image: url('/assets/images/1.png');
+    height: 7%;
+}
+
+.display-3 {
+    font-size: calc(0.3rem + 3.9vw);
+    line-height: 1.2;
+}
+
+.page-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(/assets/images/header-mesas.webp), no-repeat center center;
+    background-size: auto;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.shipping-card {
+    min-width: 120px;
+    margin: 20px auto;
+}
+
+.mat-radio-button {
+    display: block;
+    margin: 5px 0;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.col:last-child {
+    margin-right: 0;
+}
+
+.btn {
+    font-weight: 500;
+    padding: 10px 30px;
+    border-radius: 20px;
+}
+
+#btnGuardar {
+    color: white;
+    background-color: #38c89f;
+    border-color: #38c89f;
+    margin: 2px;
+}
+
+#btnLimpiar {
+    color: white;
+    background-color: #62C3E7;
+    border-color: #62C3E7;
+    margin: 2px;
+}
+
+#btnCancelar {
+    color: white;
+    background-color: #53717c;
+    border-color: #28657c;
+    margin: 2px;
+}
+

@@ -17,6 +17,7 @@ const detallePedidoRoutes = require("./routes/detallePedidoRoutes");
 const restauranteRouter = require("./routes/restauranteRoutes");
 const usuarioRouter = require("./routes/usuarioRoutes");
 const rolRouter = require("./routes/rolRoutes");
+const reportesRoutes = require("./routes/reportesRoutes");
 
 // Acceder a la configuracion del archivo .env
 dotEnv.config();
@@ -39,6 +40,7 @@ app.use("/productoCategoria/",productoCategoriaRouter);
 app.use("/mesas/",mesaRoutes);
 app.use("/estadoMesa/",estadoMesaRouter);
 app.use("/pedido/",pedidoRoutes);
+app.use("/reporte/",reportesRoutes);
 app.use("/detallepedido/",detallePedidoRoutes);
 app.use("/restaurante/", restauranteRouter);
 app.use("/usuario/", usuarioRouter);

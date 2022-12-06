@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    margin-bottom: 2%;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #555555;
+    text-align: left;
+  
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  #header {
+    background-image: url('/assets/images/1.png');
+    height: 7%;
+  }
+  
+  #numOrden{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+  }
+  
+  .shipping-card {
+    margin: 0 auto;
+    max-width: 40%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+  }
+  
+  .shipping-card2 {
+    margin: 0 auto;
+    max-width: 40%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+  }
+  
+  .mat-radio-button {
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .col {
+    flex: 1;
+    margin-right: 20px;
+  }

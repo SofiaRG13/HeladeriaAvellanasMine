@@ -62,7 +62,7 @@ export class UserAllComponent {
   }
 
   crearUsuario() {
-    this.router.navigate(['/usuarios/create'], {
+    this.router.navigate(['/usuarios-create'], {
       relativeTo: this.route,
     });
   }

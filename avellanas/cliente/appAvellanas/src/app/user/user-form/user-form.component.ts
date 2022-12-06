@@ -169,7 +169,7 @@ export class UserFormComponent {
     this.authService
       .createUser(this.userForm.value)
       .subscribe((respuesta: any) => {
-        this.router.navigate(['/usuarios/all'], {
+        this.router.navigate(['/usuarios-all'], {
           queryParams: { register: 'true' },
         });
       });
@@ -194,7 +194,7 @@ export class UserFormComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         this.respUsuario = data;
-        this.router.navigate(['/usuarios/all'], {
+        this.router.navigate(['/usuarios-all'], {
           queryParams: { update: 'true' },
         });
       });
@@ -209,7 +209,7 @@ export class UserFormComponent {
     this.userForm.reset();
   }
   onBack() {
-    this.router.navigate(['/usuarios/all']);
+    this.router.navigate(['/usuarios-all']);
   }
   ngOnDestroy() {
     this.destroy$.next(true);

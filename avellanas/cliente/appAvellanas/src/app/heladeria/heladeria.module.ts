@@ -32,8 +32,6 @@ import { ClientePedidoComponent } from './cliente-pedido/cliente-pedido.componen
 import { ClientePedidosAllComponent } from './cliente-pedidos-all/cliente-pedidos-all.component';
 import { PedidosAllComponent } from './pedidos-all/pedidos-all.component';
 import { PagoComponent } from './pago/pago.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
