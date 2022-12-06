@@ -688,7 +688,7 @@ async function main() {
       idUsuario: 1,
       estado: EstadoPedido.Registrada,
       tipoPedido: TipoPedido.En_linea,
-      idMesa: 1,
+      idMesa: null,
       fechaPedido: new Date("01/11/2022"),
       subtotal: "1700.00",
       descuento: "0.10",
@@ -701,7 +701,7 @@ async function main() {
     //Instancia de pedido 2
     data: {
       idUsuario: 2,
-      estado: EstadoPedido.Pendiente,
+      estado: EstadoPedido.Entregada,
       tipoPedido: TipoPedido.En_Restaurante,
       idMesa: 2,
       fechaPedido: new Date("02/11/2022"),
@@ -716,7 +716,7 @@ async function main() {
     //Instancia de pedido 3
     data: {
       idUsuario: 3,
-      estado: EstadoPedido.Entregada,
+      estado: EstadoPedido.Por_Entregar,
       tipoPedido: TipoPedido.En_Restaurante,
       idMesa: 3,
       fechaPedido: new Date("03/11/2022"),
@@ -731,14 +731,25 @@ async function main() {
     //Instancia de pedido 4
     data: {
       idUsuario: 4,
-      estado: EstadoPedido.Por_Pagar,
+      estado: EstadoPedido.Pagada,
       tipoPedido: TipoPedido.En_linea,
-      idMesa: 4,
+      idMesa: null,
       fechaPedido: new Date("04/11/2022"),
       subtotal: "3600.00",
       descuento: "0.10",
       impuesto: "0.13",
       total: "3661.2",
+    },
+  });
+
+  //detalle pedidos
+  await prisma.detallePedido.create({
+    //Instancia de detalle pedido 1
+    data: {
+      idProducto: 2,
+      idPedido: 1,
+      cantidad: 2,
+      notas: "Con cuchara",
     },
   });
 

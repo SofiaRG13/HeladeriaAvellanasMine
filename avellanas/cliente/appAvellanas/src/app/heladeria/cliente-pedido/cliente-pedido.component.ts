@@ -24,6 +24,7 @@ export class ClientePedidoComponent implements OnInit {
   //productos
   restaurantesList: any;
   idRestaurante: number;
+  idPedido: number;
   currentUser: any;
   total = 0;
   fecha = Date.now();
@@ -58,14 +59,13 @@ export class ClientePedidoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //Subscripción a la información del usuario actual
-    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
-
     this.cartService.currentDataCart$.subscribe((data) => {
       console.log(data);
       this.dataSource = new MatTableDataSource(data);
     });
     this.total = this.cartService.getTotal();
+    //Subscripción a la información del usuario actual
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
   }
 
   ngAfterViewInit(): void {
@@ -127,29 +127,68 @@ export class ClientePedidoComponent implements OnInit {
     this.noti.mensaje('Pedido', 'Producto eliminado', TipoMessage.warning);
   }
 
-  registrarOrden() {
-    if (this.cartService.getItems != null) {
+  pago() {
+    this.gService
+      .list('pedido')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        const datosPedido = data;
+        let cantidadDatos = datosPedido.length;
+        let pedido = datosPedido[cantidadDatos - 1];
+        this.idPedido = pedido.id;
+        this.router.navigate(['/pago/', this.idPedido], {
+          relativeTo: this.route,
+        });
+      });
+  }
+
+  registrarPedido() {
+    if (this.cartService.getItems.length > 0) {
       //Obtener todo lo necesario para crear la orden
       let itemsCarrito = this.cartService.getItems;
       let detalles = itemsCarrito.map((x) => ({
         ['ProductoId']: x.idItem,
         ['cantidad']: x.cantidad,
+        ['notas']: x.notas,
       }));
       //Datos para el API
       let infoOrden = {
+        idUsuario: this.currentUser.user.id,
+        estado: 'Registrada',
+        tipoPedido: 'En_linea',
+        idMesa: null,
         fechaPedido: new Date(this.fecha),
+        subtotal: this.total,
+        impuesto: this.total * 0.13,
+        descuento: 0,
+        total: this.total + this.total * 0.13,
         productos: detalles,
       };
       this.gService.create('pedido', infoOrden).subscribe((respuesta: any) => {
-        this.noti.mensaje('Pedido', 'Pedido registrado', TipoMessage.success);
-        this.cartService.deleteCart();
-        this.total = this.cartService.getTotal();
         console.log(respuesta);
+
+        var items = this.cartService.getItems;
+        items.forEach((p) => {
+          //p.idPedido = this.idPedido;
+          this.gService
+            .create('detallepedido', p)
+            .subscribe((respuesta: any) => {
+              this.cartService.removeFromCart(p);
+              this.total = this.cartService.getTotal();
+              this.noti.mensaje(
+                'Pedido',
+                'Pedido registrado',
+                TipoMessage.success
+              );
+              console.log('Se ha insertado registro en DetallePedido');
+            });
+        });
+        this.pago();
       });
     } else {
       this.noti.mensaje(
         'Pedido',
-        'Agregue productos a la orden',
+        'Agregue productos al pedido',
         TipoMessage.warning
       );
     }
@@ -169,6 +208,7 @@ export class ClientePedidoComponent implements OnInit {
       .subscribe((data: any) => {
         //Agregar Producto obtenido del API al carrito
         this.cartService.addToCart(data);
+        this.total = this.cartService.getTotal();
         //Notificar al usuario
         this.notificacion.mensaje(
           'Pedido',

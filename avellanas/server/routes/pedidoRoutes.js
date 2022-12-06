@@ -14,4 +14,7 @@ router.get("/:id", pedidoController.getById);
 
 router.put("/:id",pedidoController.updatePedido);
 
+router.get("/updateEstadoPedidoPorEntregar/:id",pedidoController.updateEstadoPedidoPorEntregar);
+router.get("/updateEstadoPedidoPagada/:id",pedidoController.updateEstadoPedidoPagada);
+
 module.exports = router;

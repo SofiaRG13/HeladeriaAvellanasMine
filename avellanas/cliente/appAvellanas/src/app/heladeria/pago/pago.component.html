@@ -1,0 +1,190 @@
+<body>
+    <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
+    </div>
+    <form [formGroup]="formulario" novalidate>
+        <div>
+            <p id="numOrden"> <b>Orden # {{infoPedido.id}}</b></p>
+            <mat-card class="shipping-card">
+                <mat-card-header>
+                    <mat-card-title>Monto a pagar</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <p> <b>Subtotal:</b> {{infoPedido.subtotal}}</p>
+                            <p> <b>Descuento:</b> {{infoPedido.descuento}}</p>
+                            <p> <b>Impuesto:</b> {{infoPedido.impuesto}}</p>
+                            <p> <b>Total:</b> {{infoPedido.total}}</p>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="shipping-card2">
+                <mat-card-header>
+                    <mat-card-title>Pago</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <mat-label>Tipo de Pago</mat-label>
+                            <mat-radio-group formControlName="tipoPago">
+                                <mat-radio-button value="Tarjeta">Tarjeta</mat-radio-button>
+                                <mat-radio-button value="Efectivo">Efectivo</mat-radio-button>
+                                <mat-radio-button value="Ambas">Ambas</mat-radio-button>
+                            </mat-radio-group>
+                            <mat-error
+                                *ngIf="formulario.controls['tipoPago'].touched && formulario.controls['tipoPago'].hasError('required')">
+                                Tipo de Pago es <strong>requerido</strong>
+                            </mat-error>
+                            <div [ngSwitch]="formulario.controls['tipoPago'].value">
+                                <div *ngSwitchCase="'Tarjeta'">
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Número de tarjeta:</mat-label>
+                                                <input matInput #numTarjeta type="tel" maxlength="16" minlength="16"
+                                                    placeholder="0000 0000 0000 0000" formControlName="numTarjeta" />
+                                                <mat-hint align="end">{{numTarjeta.value.length}} / 16</mat-hint>
+                                                <mat-error
+                                                    *ngIf="formulario.controls['numTarjeta'].hasError('required')">
+                                                    Número de tarjeta es <strong>requerido</strong>
+                                                </mat-error>
+                                                <mat-error
+                                                    *ngIf="formulario.controls['numTarjeta'].hasError('pattern')">
+                                                    Número de tarjeta no cumple con el formato requerido
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Fecha de Vencimiento:</mat-label>
+                                                <input matInput type="month" formControlName="vencimiento"/>
+                                                <mat-error
+                                                    *ngIf="formulario.controls['vencimiento'].hasError('required')">
+                                                    Fecha de vencimiento es <strong>requerido</strong>
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>CVV:</mat-label>
+                                                <input matInput #cvv type="tel" maxlength="3" minlength="3"
+                                                    placeholder="XXX" formControlName="cvv" />
+                                                <mat-hint align="end">{{cvv.value.length}} / 3</mat-hint>
+                                                <mat-error *ngIf="formulario.controls['cvv'].hasError('required')">
+                                                    CVV es <strong>requerido</strong>
+                                                </mat-error>
+                                                <mat-error *ngIf="formulario.controls['cvv'].hasError('pattern')">
+                                                    CVV no cumple con el formato requerido
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <mat-card-actions>
+                                        <button mat-raised-button type="submit" id="btnPagar"
+                                            (click)="pagoTarjeta();">Pagar</button>
+                                        <button mat-raised-button type="reset" (click)="onReset();"
+                                            id="btnCancelar">Cancelar</button>
+                                    </mat-card-actions>
+                                </div>
+                                <div *ngSwitchCase="'Efectivo'">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Paga con:</mat-label>
+                                        <input matInput type="tel" placeholder="Paga con" formControlName="pagacon" />
+                                        <mat-error *ngIf="formulario.controls['pagacon'].hasError('required')">
+                                            Debe especificar con cuanto desea pagar
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <div class="col">
+                                        <p> <b>Vuelto:</b> {{formulario.controls['pagacon'].value-infoPedido.total}}</p>
+                                    </div>
+                                    <mat-card-actions>
+                                        <button mat-raised-button type="submit" id="btnPagar"
+                                            (click)="pagoEfectivo();">Pagar</button>
+                                        <button mat-raised-button type="reset" (click)="onReset();"
+                                            id="btnCancelar">Cancelar</button>
+                                    </mat-card-actions>
+                                </div>
+
+
+                                <div *ngSwitchCase="'Ambas'">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Efectivo:</mat-label>
+                                        <input matInput type="tel" placeholder="Paga con" formControlName="pagacon" />
+                                        <mat-error *ngIf="formulario.controls['pagacon'].hasError('required')">
+                                            Debe especificar con cuanto desea pagar
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Número de tarjeta:</mat-label>
+                                                <input matInput #numTarjeta type="tel" maxlength="16" minlength="16"
+                                                    placeholder="0000 0000 0000 0000" formControlName="numTarjeta" />
+                                                <mat-hint align="end">{{numTarjeta.value.length}} / 16</mat-hint>
+                                                <mat-error
+                                                    *ngIf="formulario.controls['numTarjeta'].hasError('required')">
+                                                    Número de tarjeta es <strong>requerido</strong>
+                                                </mat-error>
+                                                <mat-error
+                                                    *ngIf="formulario.controls['numTarjeta'].hasError('pattern')">
+                                                    Número de tarjeta no cumple con el formato requerido
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Fecha de Vencimiento:</mat-label>
+                                                <input matInput type="month" formControlName="vencimiento" />
+                                                <mat-error
+                                                    *ngIf="formulario.controls['vencimiento'].hasError('required')">
+                                                    Fecha de vencimiento es <strong>requerido</strong>
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>CVV:</mat-label>
+                                                <input matInput #cvv type="tel" maxlength="3" minlength="3"
+                                                    placeholder="XXX" formControlName="cvv" />
+                                                <mat-hint align="end">{{cvv.value.length}} / 3</mat-hint>
+                                                <mat-error *ngIf="formulario.controls['cvv'].hasError('required')">
+                                                    CVV es <strong>requerido</strong>
+                                                </mat-error>
+                                                <mat-error *ngIf="formulario.controls['cvv'].hasError('pattern')">
+                                                    CVV no cumple con el formato requerido
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <p> <b>Efectivo:</b> {{formulario.controls['pagacon'].value}}</p>
+                                            <p> <b>Tarjeta:</b> {{infoPedido.total-
+                                                formulario.controls['pagacon'].value}}</p>
+                                        </div>
+                                    </div>
+                                    <mat-card-actions>
+                                        <button mat-raised-button type="submit" id="btnPagar"
+                                            (click)="pagoAmbas();">Pagar</button>
+                                        <button mat-raised-button type="reset" (click)="onReset();"
+                                            id="btnCancelar">Cancelar</button>
+                                    </mat-card-actions>
+                                </div>
+
+                                <div *ngSwitchDefault>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+    </form>
+</body>

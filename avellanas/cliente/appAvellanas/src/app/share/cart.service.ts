@@ -111,7 +111,6 @@ export class CartService {
   }
   //Obtener todos los items del carrito
   get getItems() {
-    
     return this.cart.getValue();
   }
   //Gestiona el conteo de los items del carrito como un Observable

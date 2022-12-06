@@ -101,7 +101,7 @@ model DetallePedido {
   pedido    Pedido  @relation(fields: [idPedido], references: [id])
   idPedido Int
   cantidad Int
-  notas String
+  notas String?
 
   @@id([idPedido, idProducto]) //Creacion llave primaria compuesta
 }
@@ -133,10 +133,9 @@ enum EstadoCupon {
 
 enum EstadoPedido {
   Registrada
-  En_Proceso
-  Pendiente
+  Por_Entregar
   Entregada
-  Por_Pagar
+  Pagada
 }
 
 enum TipoPedido {
