@@ -3,7 +3,12 @@ const { PrismaClient, EstadoPedido } = require("@prisma/client");
 const prisma = new PrismaClient();
 //Obtener listado
 module.exports.get = async (request, response, next) => {
-  const pedidos = await prisma.pedido.findMany();
+  const pedidos = await prisma.pedido.findMany({
+    include: {
+      mesa: true,
+      usuario: true,
+    },
+  });
   response.json(pedidos);
 };
 
@@ -14,20 +19,38 @@ module.exports.getById = async (request, response, next) => {
     where: {
       id: id,
     },
-    include:{
-      mesa:true,
-      usuario:true,
-      productos:{
-        select:{
-          producto:true,
-          cantidad:true,
-          notas:true,
+    include: {
+      mesa: true,
+      usuario: true,
+      productos: {
+        select: {
+          producto: true,
+          cantidad: true,
+          notas: true,
         },
       },
-   
     },
-    
-   
+  });
+  response.json(pedido);
+};
+
+//Obtener por Id Usuario
+module.exports.getByIdUsuario = async (request, response, next) => {
+  let id = parseInt(request.params.id);
+  const pedido = await prisma.pedido.findMany({
+    where: {
+      idUsuario: id,
+    },
+    include: {
+      usuario: true,
+      productos: {
+        select: {
+          producto: true,
+          cantidad: true,
+          notas: true,
+        },
+      },
+    },
   });
   response.json(pedido);
 };
@@ -87,7 +110,11 @@ module.exports.updatePedido = async (infopedido, response, next) => {
 };
 
 //Actualizar estado pedido
-module.exports.updateEstadoPedidoPorEntregar = async (infoPedido, response, next) => {
+module.exports.updateEstadoPedidoPorEntregar = async (
+  infoPedido,
+  response,
+  next
+) => {
   let idPedido = parseInt(infoPedido.params.id);
 
   const newMesa = await prisma.pedido.update({
@@ -102,7 +129,11 @@ module.exports.updateEstadoPedidoPorEntregar = async (infoPedido, response, next
 };
 
 //Actualizar estado pedido
-module.exports.updateEstadoPedidoPagada = async (infoPedido, response, next) => {
+module.exports.updateEstadoPedidoPagada = async (
+  infoPedido,
+  response,
+  next
+) => {
   let idPedido = parseInt(infoPedido.params.id);
 
   const newMesa = await prisma.pedido.update({

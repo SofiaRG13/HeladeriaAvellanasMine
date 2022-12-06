@@ -12,7 +12,7 @@ router.post("/login", usuarioController.login);
 
 router.post("/registrar", usuarioController.register);
 
-router.get("/:id",auth.grantRole(["Administrador"]),usuarioController.getById);
+router.get("/:id",usuarioController.getById);
 
 router.put("/:id",auth.grantRole(["Administrador"]),usuarioController.updateUsuario);
 

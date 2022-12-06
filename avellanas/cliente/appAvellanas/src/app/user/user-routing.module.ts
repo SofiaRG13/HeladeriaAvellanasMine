@@ -9,7 +9,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 
 const routes: Routes = [
   {
-    path: 'usuarios/all',
+    path: 'usuarios-all',
     canActivate: [AuthGuard],
     component: UserAllComponent,
     data: {
@@ -17,7 +17,7 @@ const routes: Routes = [
     },
   },
   {
-    path: 'usuarios/create',
+    path: 'usuarios-create',
     canActivate: [AuthGuard],
     component: UserFormComponent,
     data: {

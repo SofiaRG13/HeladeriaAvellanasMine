@@ -14,6 +14,8 @@ router.get("/:id", pedidoController.getById);
 
 router.put("/:id",pedidoController.updatePedido);
 
+router.get("/getByIdUsuario/:id", pedidoController.getByIdUsuario);
+
 router.get("/updateEstadoPedidoPorEntregar/:id",pedidoController.updateEstadoPedidoPorEntregar);
 router.get("/updateEstadoPedidoPagada/:id",pedidoController.updateEstadoPedidoPagada);
 
