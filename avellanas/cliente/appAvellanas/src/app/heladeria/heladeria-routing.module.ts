@@ -7,6 +7,7 @@ import { MesasDetailComponent } from './mesas-detail/mesas-detail.component';
 import { MesasFormComponent } from './mesas-form/mesas-form.component';
 import { MesasPedidoComponent } from './mesas-pedido/mesas-pedido.component';
 import { MesasComponent } from './mesas/mesas.component';
+import { PagoComponent } from './pago/pago.component';
 import { PedidoDetailComponent } from './pedido-detail/pedido-detail.component';
 import { PedidoComponent } from './pedido/pedido.component';
 import { ProductosAllComponent } from './productos-all/productos-all.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
     path: 'productos',component: ProductosComponent,
   },
   { path: 'pedido', component: PedidoComponent },
+  
   {
     path: 'cliente-pedido',
     canActivate: [AuthGuard],
@@ -67,6 +69,7 @@ const routes: Routes = [
       rol: ['Administrador'],
     },
   },
+  { path: 'pago/:id', component: PagoComponent },
   { path: 'productos/:id', component: ProductosDetailComponent },
   {
     path: 'mesas/:id',

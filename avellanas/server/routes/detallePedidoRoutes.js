@@ -8,6 +8,8 @@ const detallePedidoController = require("../controllers/detallePedidoController"
 //Definición de rutas para productoCategoria
 router.get("/", detallePedidoController.get);
 
-router.get("/:id", detallePedidoController.getById);
+router.post("/",detallePedidoController.createDetallePedido);
+
+router.get("/:id", detallePedidoController.getByIdPedido);
 
 module.exports = router;
