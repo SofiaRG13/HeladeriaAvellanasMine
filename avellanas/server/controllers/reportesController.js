@@ -80,29 +80,42 @@ module.exports.getVentaMedioPagoRangoFechas = async (
 };
 
 //REPORTE 3
-//Reporte de ventas por Mesa Fecha Actual
-/* module.exports.getVentaMesa = async (request, response, next) => {
-  let mes = parseInt(request.params.mes) | 1;
+
+//Reporte por Mesa
+module.exports.getVentaMesa = async (request, response, next) => {
+  let values = request.body,
+  fechaInicial = new Date(values.fechaInicial), 
+  fechaFinal = new Date(values.fechaFinal);
+  let id = values.id; 
   const result = await prisma.$queryRaw(
-    Prisma.sql`SELECT v.nombre, (SUM(ov.cantidad)*v.precio) as total FROM orden o, ordenonvideojuego ov, videojuego v WHERE o.id=ov.ordenId and ov.videojuegoId=v.id GROUP BY ov.videojuegoId ORDER BY total DESC`
-  );
+    Prisma.sql`SELECT m.codigo AS Nombre, SUM(o.total) AS Total_Ventas FROM pago f INNER JOIN pedido o ON f.idPedido= o.id INNER JOIN mesa m ON o.idMesa=m.id
+    WHERE o.fechaPedido BETWEEN ${fechaInicial} and ${fechaFinal} and o.idMesa=${id}`
+  )
   response.json(result);
 };
 
-//Reporte de ventas por Mesero Fecha Actual
-module.exports.getVentaMesero= async (request, response, next) => {
-    let mes = parseInt(request.params.mes) | 1;
-    const result = await prisma.$queryRaw(
-      Prisma.sql`SELECT v.nombre, (SUM(ov.cantidad)*v.precio) as total FROM orden o, ordenonvideojuego ov, videojuego v WHERE o.id=ov.ordenId and ov.videojuegoId=v.id GROUP BY ov.videojuegoId ORDER BY total DESC`
-    );
-    response.json(result);
+//Reporte por Mesero
+module.exports.getVentaMesero = async (request, response, next) => {
+  let values = request.body;
+  fechaInicial = new Date(values.fechaInicial);
+  fechaFinal = new Date(values.fechaFinal);
+  let id = values.id;  
+  const result = await prisma.$queryRaw(
+    Prisma.sql`SELECT u.nombre AS Nombre, SUM(f.total) AS Total_Ventas FROM pedido f INNER JOIN usuario u ON f.idUsuario= u.id
+    WHERE f.fechaPedido BETWEEN ${fechaInicial} AND ${fechaFinal} AND u.rol='Mesero' AND u.id=${id}`
+  )
+  response.json(result);
 };
 
-//Reporte de ventas por Producto Fecha Actual
-module.exports.getVentaProducto= async (request, response, next) => {
-    let mes = parseInt(request.params.mes) | 1;
-    const result = await prisma.$queryRaw(
-      Prisma.sql`SELECT v.nombre, (SUM(ov.cantidad)*v.precio) as total FROM orden o, ordenonvideojuego ov, videojuego v WHERE o.id=ov.ordenId and ov.videojuegoId=v.id GROUP BY ov.videojuegoId ORDER BY total DESC`
-    );
-    response.json(result);
-}; */
+//Reporte por producto
+module.exports.getVentaProducto = async (request, response, next) => {
+  let values = request.body,
+  fechaInicial = new Date(values.fechaInicial), 
+  fechaFinal = new Date(values.fechaFinal);
+  let id = values.id;  
+  const result = await prisma.$queryRaw(
+    Prisma.sql`SELECT  p.nombre AS Nombre, SUM(f.total) AS Total_Ventas FROM pedido f INNER JOIN detallepedido o ON f.id= o.idPedido
+    INNER JOIN producto p ON o.idProducto= p.id  WHERE f.fechaPedido BETWEEN ${fechaInicial} and ${fechaFinal} and p.id=${id}`
+  )
+  response.json(result);
+};

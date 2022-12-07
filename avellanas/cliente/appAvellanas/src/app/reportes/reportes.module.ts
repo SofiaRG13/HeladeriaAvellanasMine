@@ -13,12 +13,16 @@ import { ReporteVentasFechasComponent } from './reporte-ventas-fechas/reporte-ve
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { ReporteVentasMedioPagoComponent } from './reporte-ventas-medio-pago/reporte-ventas-medio-pago.component';
+import { ReporteVentasTipoComponent } from './reporte-ventas-tipo/reporte-ventas-tipo.component';
+import { ReporteVentasTipoMeseroComponent } from './reporte-ventas-tipo-mesero/reporte-ventas-tipo-mesero.component';
 
 
 @NgModule({
   declarations: [
     ReporteVentasFechasComponent,
-    ReporteVentasMedioPagoComponent
+    ReporteVentasMedioPagoComponent,
+    ReporteVentasTipoComponent,
+    ReporteVentasTipoMeseroComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +40,9 @@ import { ReporteVentasMedioPagoComponent } from './reporte-ventas-medio-pago/rep
   ],
   exports: [
     ReporteVentasFechasComponent,
-    ReporteVentasMedioPagoComponent
+    ReporteVentasMedioPagoComponent,
+    ReporteVentasTipoComponent,
+    ReporteVentasTipoMeseroComponent
   ]
 })
 export class ReportesModule { }

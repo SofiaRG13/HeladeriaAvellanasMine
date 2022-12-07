@@ -8,6 +8,8 @@ const auth=require("../middleware/auth");
 
 router.get("/",auth.grantRole(["Administrador"]),usuarioController.get);
 
+router.get("/mesero/",usuarioController.getMesero);
+
 router.post("/login", usuarioController.login);
 
 router.post("/registrar", usuarioController.register);

@@ -25,6 +25,14 @@ module.exports.getById = async (request, response, next) => {
   response.json(usuario);
 };
 
+//Obtener listado por Mesero
+module.exports.getMesero=async(request,response,next)=>{
+  const usuarios=await prisma.usuario.findMany({
+    where:{rol:'Mesero'}
+  });
+  response.json(usuarios);
+};
+
 //Crear nuevo usuario
 module.exports.register = async (request, response, next) => {
   const userData = request.body;
