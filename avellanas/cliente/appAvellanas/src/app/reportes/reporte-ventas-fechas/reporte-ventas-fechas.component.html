@@ -1,0 +1,60 @@
+<body>
+    <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
+    </div>
+
+    <form [formGroup]="formulario" (ngSubmit)="reporteFiltrado()" novalidate>
+        <mat-card class="shipping-card">
+            <h2>Mostrar reporte por rango de fechas:</h2>
+            <div class="row">
+
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Fecha inicial</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="fechaInicial">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="errorHandling('fechaInicial', 'required')">
+                            Fecha inicial es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Fecha final</mat-label>
+                        <input matInput [matDatepicker]="picker2" formControlName="fechaFinal">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="errorHandling('fechaFinal', 'required')">
+                            Fecha final es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <br>
+            <button mat-raised-button color="accent" type="submit" id="btnProcesar">Procesar</button>
+        </mat-card>
+    </form>
+
+    <mat-card-content class="shipping-card">
+        <div id="htmlData" class="contenedor">
+            <h2 class="titulo">{{titulo}}</h2>
+            <table class="tabla">
+                <thead>
+                    <tr class="table-primary">
+                        <th class="tituloTabla">Total de Ventas:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of datos">
+                        <td class="ventas">{{ item.Total_de_Ventas | currency:'₡' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button mat-raised-button color="accent" id="btnPDF" (click)="openPDF()">Descargar PDF<mat-icon>download</mat-icon></button>
+    </mat-card-content>
+
+
+</body>

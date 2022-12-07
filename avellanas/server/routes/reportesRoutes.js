@@ -4,10 +4,17 @@ const router = express.Router();
 
 //Reportes controller para los métodos definidos
 const reportesController = require("../controllers/reportesController");
+const auth=require("../middleware/auth");
 
 //Definición de rutas para reportes
-router.get("/vProductoRangoFechas",reportesController.getVentaProductoRangoFechas);
+router.get("/vFecha",auth.grantRole(["Administrador"]),reportesController.getVentaFecha);
 
-//router.get("/vProducto/:mes", reportesController.getVentaProductoMes);
+router.post("/vRangoFechas",auth.grantRole(["Administrador"]),reportesController.getVentaRangoFechas);
+
+router.get("/vMedioPagoFecha",auth.grantRole(["Administrador"]),reportesController.getVentaMedioPagoFecha);
+
+router.post("/vMedioPagoRangoFechas",auth.grantRole(["Administrador"]),reportesController.getVentaMedioPagoRangoFechas);
+
+
 
 module.exports = router;

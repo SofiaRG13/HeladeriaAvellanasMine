@@ -3,11 +3,13 @@ const express = require("express");
 const router = express.Router();
 
 //Videojuego controller para los métodos definidos
-const cuponController = require("../controllers/cuponController");
+const pagoController = require("../controllers/pagoController");
 
 //Definición de rutas para productoCategoria
-router.get("/", cuponController.get);
+router.get("/", pagoController.get);
 
-router.get("/:id", cuponController.getById);
+router.post("/",pagoController.createPago);
+
+router.get("/:id", pagoController.getById);
 
 module.exports = router;

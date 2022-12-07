@@ -14,6 +14,7 @@ const mesaRoutes = require("./routes/mesaRoutes");
 const estadoMesaRouter = require("./routes/estadoMesaRoutes");
 const pedidoRoutes = require("./routes/pedidoRoutes");
 const detallePedidoRoutes = require("./routes/detallePedidoRoutes");
+const pagoRoutes = require("./routes/pagoRoutes");
 const restauranteRouter = require("./routes/restauranteRoutes");
 const usuarioRouter = require("./routes/usuarioRoutes");
 const rolRouter = require("./routes/rolRoutes");
@@ -40,11 +41,12 @@ app.use("/productoCategoria/",productoCategoriaRouter);
 app.use("/mesas/",mesaRoutes);
 app.use("/estadoMesa/",estadoMesaRouter);
 app.use("/pedido/",pedidoRoutes);
-app.use("/reporte/",reportesRoutes);
 app.use("/detallepedido/",detallePedidoRoutes);
+app.use("/pago/",pagoRoutes);
 app.use("/restaurante/", restauranteRouter);
 app.use("/usuario/", usuarioRouter);
 app.use("/rol/",rolRouter);
+app.use("/reporte/",reportesRoutes);
 
 // Servidor
 app.listen(port, () => {

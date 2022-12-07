@@ -25,6 +25,8 @@ export class PagoComponent implements OnInit {
   respUpdate: any;
   currentUser: any;
   mesaInfo: any;
+  respPago: any;
+  tipoPago: any;
   tarjeta: any;
   total = 0;
   fecha = Date.now();
@@ -107,6 +109,7 @@ export class PagoComponent implements OnInit {
         TipoMessage.error
       );
     } else {
+      this.tipoPago = 'Efectivo';
       this.pagar();
     }
   }
@@ -127,6 +130,7 @@ export class PagoComponent implements OnInit {
       if (this.formulario.controls['vencimiento'].value < date) {
         this.noti.mensaje('Pago', 'Tarjeta vencida', TipoMessage.error);
       } else {
+        this.tipoPago = 'Ambas';
         this.pagar();
       }
     }
@@ -139,15 +143,27 @@ export class PagoComponent implements OnInit {
     if (this.formulario.controls['vencimiento'].value < date) {
       this.noti.mensaje('Pago', 'Tarjeta vencida', TipoMessage.error);
     } else {
+      this.tipoPago = 'Tarjeta';
       this.pagar();
     }
   }
 
   pagar() {
+    let infoPago = {
+      idPedido: this.infoPedido.id,
+      tipoPago: this.tipoPago,
+      totalPago: this.infoPedido.total,
+    };
+    this.gService
+      .create('pago', infoPago)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: any) => {
+        this.respPago = data;
+      });
     if (this.currentUser.user.rol === 'Cliente') {
       this.updateEstadoPedidoPorEntregar(this.infoPedido.id);
       this.noti.mensaje('Pago', 'Pago realizado', TipoMessage.success);
-      this.router.navigate(['/mesas/'], {
+      this.router.navigate(['/'], {
         relativeTo: this.route,
       });
     } else {
@@ -160,9 +176,9 @@ export class PagoComponent implements OnInit {
     }
   }
 
-  updateMesaEstadoDesocupada(idMesa: number){
+  updateMesaEstadoDesocupada(idMesa: number) {
     this.gService
-      .updateState('mesas/updateEstadoDesocupada',idMesa)
+      .updateState('mesas/updateEstadoDesocupada', idMesa)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: any) => {
         // console.log(data);

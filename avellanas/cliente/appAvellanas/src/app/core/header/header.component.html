@@ -88,6 +88,15 @@
                                     <button mat-menu-item [routerLink]="'/usuarios-all'"
                                         [routerLinkActive]="'mat-raised-button'">Usuarios</button>
                                 </mat-menu>
+                                <li class="nav-item">
+                                    <a class="nav-link" [matMenuTriggerFor]="menuR">Reportes</a>
+                                </li>
+                                <mat-menu #menuR="matMenu">
+                                    <button mat-menu-item [routerLink]="'/vFechas'"
+                                        [routerLinkActive]="'mat-raised-button'">Reporte Ventas por Fechas</button>
+                                        <button mat-menu-item [routerLink]="'/vMedioPago'"
+                                        [routerLinkActive]="'mat-raised-button'">Reporte Ventas por Medio de Pago</button>
+                                </mat-menu>
                             </ul>
                         </div>
                     </div>

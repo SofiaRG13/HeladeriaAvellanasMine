@@ -12,6 +12,7 @@ import { HttpErrorInterceptorService } from './share/http-error-interceptor.serv
 import { PedidosModule } from './pedidos/pedidos.module';
 import { ProductosModule } from './productos/productos.module';
 import { MesasModule } from './mesas/mesas.module';
+import { ReportesModule } from './reportes/reportes.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { MesasModule } from './mesas/mesas.module';
     PedidosModule,
     ProductosModule,
     MesasModule,
+    ReportesModule,
     //Mantener al final
     AppRoutingModule,
   ],
