@@ -15,6 +15,8 @@ router.get("/vMedioPagoFecha",auth.grantRole(["Administrador"]),reportesControll
 
 router.post("/vMedioPagoRangoFechas",auth.grantRole(["Administrador"]),reportesController.getVentaMedioPagoRangoFechas);
 
-
+router.post("/vMesa",auth.grantRole(["Administrador","Mesero"]),reportesController.getVentaMesa);
+router.post("/vMesero",auth.grantRole(["Administrador","Mesero"]),reportesController.getVentaMesero);
+router.post("/vProducto",auth.grantRole(["Administrador","Mesero"]),reportesController.getVentaProducto);
 
 module.exports = router;

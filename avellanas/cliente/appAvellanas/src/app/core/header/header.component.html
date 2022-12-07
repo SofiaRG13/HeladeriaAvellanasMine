@@ -63,6 +63,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" [routerLink]="['/pedidos-usuario']">Mis Pedidos</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [matMenuTriggerFor]="menuR">Reportes</a>
+                                </li>
+                                <mat-menu #menuR="matMenu">
+                                    <button mat-menu-item [routerLink]="'/vMesero'"
+                                        [routerLinkActive]="'mat-raised-button'">Reporte Ventas por Rango de Fechas</button>
+                                </mat-menu>
                             </ul>
                         </div>
 
@@ -96,6 +103,8 @@
                                         [routerLinkActive]="'mat-raised-button'">Reporte Ventas por Fechas</button>
                                         <button mat-menu-item [routerLink]="'/vMedioPago'"
                                         [routerLinkActive]="'mat-raised-button'">Reporte Ventas por Medio de Pago</button>
+                                        <button mat-menu-item [routerLink]="'/vTipo'"
+                                        [routerLinkActive]="'mat-raised-button'">Reporte Ventas Filtrado</button>
                                 </mat-menu>
                             </ul>
                         </div>

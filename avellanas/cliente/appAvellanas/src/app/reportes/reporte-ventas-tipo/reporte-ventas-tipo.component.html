@@ -1,0 +1,76 @@
+<body>
+    <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header"></div>
+
+    <form [formGroup]="formulario" novalidate>
+        <mat-card class="shipping-card">
+            <h2>Mostrar reporte por tipos</h2>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Fecha inicial</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="fechaInicial" />
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="errorHandling('fechaInicial', 'required')">
+                            Fecha inicial es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Fecha final</mat-label>
+                        <input matInput [matDatepicker]="picker2" formControlName="fechaFinal" />
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="errorHandling('fechaFinal', 'required')">
+                            Fecha final es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Tipo</mat-label>
+                        <mat-select placeholder="Tipo" #tipo formControlName="tipo" (selectionChange)="lista(tipo.value)">
+                            <mat-option *ngFor="let m of tipoList" [value]="m.Value">
+                                {{ m.Text }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Seleccione el que desee</mat-label>
+                        <mat-select placeholder="Seleccione" #tipoA formControlName="id">
+                            <div [ngSwitch]="tipo.value">
+                                <div *ngSwitchCase="'1'">
+                                    <mat-option *ngFor="let m of listas" [value]="m.id">
+                                        {{ m.codigo }}
+                                    </mat-option>
+                                </div>
+                                <div *ngSwitchCase="'2'">
+                                    <mat-option *ngFor="let m of listas" [value]="m.id">
+                                        {{ m.nombre }}
+                                    </mat-option>
+                                </div>
+                                <div *ngSwitchDefault>
+                                    <mat-option *ngFor="let m of listas" [value]="m.id">
+                                        {{ m.nombre }}
+                                    </mat-option>
+                                </div>
+                            </div>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <br />
+            <button mat-raised-button color="accent" type="submit" (click)="reporteFiltrado()" id="btnProcesar">
+                Procesar
+            </button>
+        </mat-card>
+    </form>
+    <mat-card-content>
+        <canvas #graficoCanvas class="chart"></canvas>
+    </mat-card-content>
+</body>
