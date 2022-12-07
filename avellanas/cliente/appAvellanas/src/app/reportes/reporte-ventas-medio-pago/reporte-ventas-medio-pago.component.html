@@ -1,0 +1,44 @@
+<body>
+    <div class="container-fluid bg-primary py-3 d-none d-md-block" id="header">
+    </div>
+
+    <form [formGroup]="formulario" novalidate>
+        <mat-card class="shipping-card">
+            <h2>Mostrar reporte por rango de fechas:</h2>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Fecha inicial</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="fechaInicial">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="errorHandling('fechaInicial', 'required')">
+                            Fecha inicial es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Fecha final</mat-label>
+                        <input matInput [matDatepicker]="picker2" formControlName="fechaFinal">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="errorHandling('fechaFinal', 'required')">
+                            Fecha final es <strong>requerido</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <br>
+            <button mat-raised-button color="accent" type="submit" (click)="reporteFiltrado();" id="btnProcesar">Procesar</button>
+
+        </mat-card>
+    </form>
+    
+    <mat-card-content>
+        <div><h2 class="titulo">{{filtro}}</h2></div>
+        <canvas #graficoCanvas class="chart"></canvas>
+    </mat-card-content>
+</body>

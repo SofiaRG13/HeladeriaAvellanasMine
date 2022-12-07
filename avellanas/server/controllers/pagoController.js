@@ -24,7 +24,7 @@ module.exports.createPago = async (infoPago, response, next) => {
   let pago = infoPago.body;
   const newPago = await prisma.pago.create({
     data: {
-      idPedido: pago.idUsuarioPedido,
+      idPedido: pago.idPedido,
       tipoPago: pago.tipoPago,
       totalPago: pago.totalPago,
     },
@@ -32,25 +32,3 @@ module.exports.createPago = async (infoPago, response, next) => {
   response.json(newPago);
 };
 
-//Actualizar pago
-module.exports.updatePago = async (infoPago, response, next) => {
-  let pago = infoPago.body;
-  let idPago = parseInt(infoPago.params.id);
-
-  //Obtener videojuego viego (anterior)
-  const pagoVieja = await prisma.pago.findUnique({
-    where: { id: idPago },
-  });
-
-  const newPago = await prisma.pago.update({
-    where: {
-      id: idPago,
-    },
-    data: {
-        idPedido: pago.idUsuarioPedido,
-        tipoPago: pago.tipoPago,
-        totalPago: pago.totalPago,
-    },
-  });
-  response.json(newPago);
-};

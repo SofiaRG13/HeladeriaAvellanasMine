@@ -154,4 +154,5 @@ model Pago {
 enum TipoPago {
   Efectivo
   Tarjeta
+  Ambas
 }

@@ -11,10 +11,10 @@
                 <mat-card-content>
                     <div class="row">
                         <div class="col">
-                            <p> <b>Subtotal:</b> {{infoPedido.subtotal}}</p>
-                            <p> <b>Descuento:</b> {{infoPedido.descuento}}</p>
-                            <p> <b>Impuesto:</b> {{infoPedido.impuesto}}</p>
-                            <p> <b>Total:</b> {{infoPedido.total}}</p>
+                            <p> <b>Subtotal:</b> {{infoPedido.subtotal | currency:'₡'}}</p>
+                            <p> <b>Descuento:</b> {{infoPedido.descuento | currency:'₡'}}</p>
+                            <p> <b>Impuesto:</b> {{infoPedido.impuesto | currency:'₡'}}</p>
+                            <p> <b>Total:</b> {{infoPedido.total | currency:'₡'}}</p>
                         </div>
                     </div>
                 </mat-card-content>
