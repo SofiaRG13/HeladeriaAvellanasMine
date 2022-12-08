@@ -26,9 +26,9 @@ async function main() {
     //Instancia de usuario 1
     data: {
       email: "admin1@prueba.com",
-      nombre: "usuarioAdmin1",
-      apellido1: "usuarioAdmin1.1",
-      apellido2: "usuarioAdmin1.2",
+      nombre: "Pablo",
+      apellido1: "Mora",
+      apellido2: "Morales.2",
       contrasenna:
         "$2b$10$1BaQqXuZYNLDAC42PY5fN.ufSOKjApmjkaZrQUYf7ms71PaS1mASO",
       rol: Rol.Administrador,
@@ -38,10 +38,10 @@ async function main() {
   await prisma.usuario.create({
     //Instancia de usuario 2
     data: {
-      email: "usuario-admin2@prueba.com",
-      nombre: "usuarioAdmin2",
-      apellido1: "usuarioAdmin2.1",
-      apellido2: "usuarioAdmin2.2",
+      email: "admin2@prueba.com",
+      nombre: "Maria",
+      apellido1: "Vargas",
+      apellido2: "Porras",
       contrasenna:
         "$2b$10$1BaQqXuZYNLDAC42PY5fN.ufSOKjApmjkaZrQUYf7ms71PaS1mASO",
       rol: Rol.Administrador,
@@ -51,10 +51,10 @@ async function main() {
   await prisma.usuario.create({
     //Instancia de usuario 3
     data: {
-      email: "usuario-cliente1@prueba.com",
-      nombre: "usuarioCliente1",
-      apellido1: "usuarioCliente1.1",
-      apellido2: "usuarioCliente1.2",
+      email: "cliente1@prueba.com",
+      nombre: "Fernando",
+      apellido1: "Perez",
+      apellido2: "Marin",
       contrasenna:
         "$2b$10$1BaQqXuZYNLDAC42PY5fN.ufSOKjApmjkaZrQUYf7ms71PaS1mASO",
       idRestaurante: null,
@@ -63,10 +63,10 @@ async function main() {
   await prisma.usuario.create({
     //Instancia de usuario 4
     data: {
-      email: "usuario-cliente2@prueba.com",
-      nombre: "usuarioCliente2",
-      apellido1: "usuarioCliente2.1",
-      apellido2: "usuarioCliente2.2",
+      email: "cliente2@prueba.com",
+      nombre: "Carmen",
+      apellido1: "Flores",
+      apellido2: "Solis",
       contrasenna:
         "$2b$10$1BaQqXuZYNLDAC42PY5fN.ufSOKjApmjkaZrQUYf7ms71PaS1mASO",
       idRestaurante: null,
@@ -75,10 +75,10 @@ async function main() {
   await prisma.usuario.create({
     //Instancia de usuario 5
     data: {
-      email: "usuario-mesero1@prueba.com",
-      nombre: "usuarioMesero1",
-      apellido1: "usuarioMesero1.1",
-      apellido2: "usuarioMesero1.2",
+      email: "mesero1@prueba.com",
+      nombre: "Camila",
+      apellido1: "Gutierrez",
+      apellido2: "Sandoval",
       contrasenna:
         "$2b$10$1BaQqXuZYNLDAC42PY5fN.ufSOKjApmjkaZrQUYf7ms71PaS1mASO",
       rol: Rol.Mesero,
@@ -88,10 +88,10 @@ async function main() {
   await prisma.usuario.create({
     //Instancia de usuario 6
     data: {
-      email: "usuario-mesero2@prueba.com",
-      nombre: "usuarioMesero2",
-      apellido1: "usuarioMesero2.1",
-      apellido2: "usuarioMesero2.2",
+      email: "mesero2@prueba.com",
+      nombre: "Carlos",
+      apellido1: "Rodriguez",
+      apellido2: "Ortiz",
       contrasenna:
         "$2b$10$1BaQqXuZYNLDAC42PY5fN.ufSOKjApmjkaZrQUYf7ms71PaS1mASO",
       rol: Rol.Mesero,
@@ -169,6 +169,45 @@ async function main() {
       estado: EstadoMesa.Desocupada,
       capacidad: 4,
       idRestaurante: 1,
+    },
+  });
+  await prisma.mesa.create({
+    //Instancia de mesa 1 Restaurante 2
+    data: {
+      codigo: "AVB-1",
+      estado: EstadoMesa.Desocupada,
+      capacidad: 4,
+      idRestaurante: 2,
+    },
+  });
+
+  await prisma.mesa.create({
+    //Instancia de mesa 2 Restaurante 2
+    data: {
+      codigo: "AVB-2",
+      estado: EstadoMesa.Ocupada,
+      capacidad: 5,
+      idRestaurante: 2,
+    },
+  });
+
+  await prisma.mesa.create({
+    //Instancia de mesa 3 Restaurante 2
+    data: {
+      codigo: "AVB-3",
+      estado: EstadoMesa.Desocupada,
+      capacidad: 4,
+      idRestaurante: 2,
+    },
+  });
+
+  await prisma.mesa.create({
+    //Instancia de mesa 4 Restaurante 2
+    data: {
+      codigo: "AVB-4",
+      estado: EstadoMesa.Inactiva,
+      capacidad: 2,
+      idRestaurante: 2,
     },
   });
   //Productos
@@ -689,11 +728,11 @@ async function main() {
       estado: EstadoPedido.Registrada,
       tipoPedido: TipoPedido.En_linea,
       idMesa: null,
-      fechaPedido: new Date("01/11/2022"),
+      fechaPedido: new Date("11/05/2022"),
       subtotal: "1700.00",
-      descuento: "0.10",
-      impuesto: "0.13",
-      total: "1728.9",
+      descuento: "0",
+      impuesto: "221.00",
+      total: "1921.00",
     },
   });
 
@@ -704,11 +743,11 @@ async function main() {
       estado: EstadoPedido.Entregada,
       tipoPedido: TipoPedido.En_Restaurante,
       idMesa: 2,
-      fechaPedido: new Date("02/11/2022"),
+      fechaPedido: new Date("11/06/2022"),
       subtotal: "2550.00",
-      descuento: "0.10",
-      impuesto: "0.13",
-      total: "2593.35",
+      descuento: "0",
+      impuesto: "331.5",
+      total: "2881.5",
     },
   });
 
@@ -716,14 +755,14 @@ async function main() {
     //Instancia de pedido 3
     data: {
       idUsuario: 3,
-      estado: EstadoPedido.Por_Entregar,
+      estado: EstadoPedido.Entregada,
       tipoPedido: TipoPedido.En_Restaurante,
       idMesa: 3,
-      fechaPedido: new Date("03/11/2022"),
-      subtotal: "1700.00",
-      descuento: "0.10",
-      impuesto: "0.13",
-      total: "1728.9",
+      fechaPedido: new Date("11/07/2022"),
+      subtotal: "2400.00",
+      descuento: "0",
+      impuesto: "312.00",
+      total: "2712.00",
     },
   });
 
@@ -731,14 +770,14 @@ async function main() {
     //Instancia de pedido 4
     data: {
       idUsuario: 4,
-      estado: EstadoPedido.Pagada,
+      estado: EstadoPedido.Entregada,
       tipoPedido: TipoPedido.En_linea,
       idMesa: null,
-      fechaPedido: new Date("04/11/2022"),
-      subtotal: "3600.00",
-      descuento: "0.10",
-      impuesto: "0.13",
-      total: "3661.2",
+      fechaPedido: new Date("11/08/2022"),
+      subtotal: "4200.00",
+      descuento: "0",
+      impuesto: "546",
+      total: "4746.00",
     },
   });
 
@@ -777,7 +816,7 @@ async function main() {
   await prisma.detallePedido.create({
     //Instancia de detalle pedido 3
     data: {
-      idProducto: 3,
+      idProducto: 4,
       idPedido: 3,
       cantidad: 2,
       notas: "Con cuchara",
@@ -787,7 +826,7 @@ async function main() {
   await prisma.detallePedido.create({
     //Instancia de detalle pedido 4
     data: {
-      idProducto: 4,
+      idProducto: 7,
       idPedido: 4,
       cantidad: 3,
       notas: "Sin cuchara",
@@ -800,7 +839,7 @@ async function main() {
     data: {
       idPedido: 1,
       tipoPago: TipoPago.Efectivo,
-      totalPago: 3000,
+      totalPago: "1921",
     },
   });
 
@@ -809,7 +848,7 @@ async function main() {
     data: {
       idPedido: 2,
       tipoPago: TipoPago.Tarjeta,
-      totalPago: 3100,
+      totalPago: "2881.5",
     },
   });
 
@@ -817,8 +856,8 @@ async function main() {
     //Instancia de pago 3
     data: {
       idPedido: 3,
-      tipoPago: TipoPago.Efectivo,
-      totalPago: 3200,
+      tipoPago: TipoPago.Tarjeta,
+      totalPago: "2712.00",
     },
   });
 
@@ -826,8 +865,8 @@ async function main() {
     //Instancia de pago 4
     data: {
       idPedido: 4,
-      tipoPago: TipoPago.Tarjeta,
-      totalPago: 3300,
+      tipoPago: TipoPago.Ambas,
+      totalPago: "4746.00",
     },
   });
 }

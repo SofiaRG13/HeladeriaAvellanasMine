@@ -24,7 +24,7 @@
             <div style="margin-top: 6%; margin-bottom: 4%;">
                 <h4>Seleccione un restaurante para ver sus productos:</h4>
                 <mat-form-field class="full-width" style="background-color: white;">
-                    <mat-select #idRestaurante (selectionChange)="listaProductos(idRestaurante.value)" (selectionChange)="listaProductos(idRestaurante.value)"
+                    <mat-select #idRestaurante (selectionChange)="listaProductos(idRestaurante.value)"
                         placeholder="Restaurante">
                         <mat-option *ngFor="let r of restaurantesList" [value]="r.id">
                             {{ r.codigo }}
